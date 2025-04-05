@@ -13,20 +13,21 @@
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f0f0f0;
-            color: #1d1d1f;
+            background-color: #ffffff;
+            color: #000000;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
             gap: 1.5rem;
+            padding: 0.5rem;
         }
 
         .kv-k {
             font-size: 0.75rem;
-            font-weight: 500;
-            color: #666;
+            font-weight: 600;
+            color: #1d1d1f;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
@@ -34,46 +35,48 @@
         .kv-v {
             font-size: 1rem;
             font-weight: 500;
-            color: #1d1d1f;
+            color: #000000;
             letter-spacing: -0.02em;
             margin-top: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
         }
 
         .operate-button {
             cursor: pointer;
             transition: all 0.2s ease;
-            color: #E53935;
+            color: #DE0000;
             font-size: 0.875rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
         .operate-button:hover {
-            color: #C62828;
+            color: #FF0000;
         }
 
         .offline {
-            opacity: 0.8;
-            border-left: 4px solid #E53935;
+            border-left: 8px solid #DE0000;
         }
 
         .online {
-            border-left: 4px solid #1E88E5;
+            border-left: 8px solid #0000DE;
+        }
+
+        .bg-success {
+            background-color: #0000DE;
         }
 
         .server-card {
-            background: #fff;
+            background: #ffffff;
             border-radius: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
+            border: 2px solid #000000;
+            padding: 1rem;
         }
 
         .server-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
         }
 
         #trendChart {
@@ -81,13 +84,14 @@
             border-radius: 0;
             padding: 1rem;
             background: white;
-            border: 2px solid #1E88E5;
+            border: 2px solid #000000;
         }
 
         .modal-content {
-            background: #fff;
+            background: #ffffff;
             border-radius: 0;
-            border: 2px solid #1E88E5;
+            border: 2px solid #000000;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
         }
 
         select {
@@ -97,8 +101,8 @@
             background-position: right 0.5rem center;
             background-size: 1em;
             padding-right: 2.5rem;
+            border: 2px solid #000000;
             border-radius: 0;
-            border: 2px solid #1E88E5;
         }
 
         .settings-button {
@@ -108,43 +112,74 @@
             align-items: center;
             justify-content: center;
             border-radius: 0;
-            background: #1E88E5;
-            color: white;
+            background: #FFDE00;
+            border: 2px solid #000000;
             transition: all 0.2s ease;
         }
 
         .settings-button:hover {
-            background: #1565C0;
+            background: #FFE866;
         }
 
-        /* Bauhaus-style circle progress */
+        /* Larger circle progress */
         svg.percentage-circle {
-            width: 3rem;
-            height: 3rem;
+            width: 2rem;
+            height: 2rem;
+            margin-right: 0.75rem;
         }
 
         svg.percentage-circle circle {
             transition: stroke-dashoffset 0.35s;
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
-            stroke-width: 8;
+            stroke-width: 4;
         }
 
-        svg.percentage-circle circle.bg {
-            stroke: #f0f0f0;
+        .circle-background {
+            stroke: #E5E5E5;
         }
 
-        svg.percentage-circle circle.progress {
-            stroke: #1E88E5;
+        .circle-progress {
+            stroke: #0000DE;
         }
 
-        .metric-card {
-            padding: 1rem;
-            background: white;
-            border: 2px solid #1E88E5;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+        /* Custom button styles */
+        .bauhaus-button {
+            background: #FFDE00;
+            border: 2px solid #000000;
+            color: #000000;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .bauhaus-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header styles */
+        .bauhaus-header {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #000000;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .bauhaus-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 6px;
+            background: #DE0000;
+            margin: 1rem auto;
         }
     </style>
 </head>
@@ -212,37 +247,38 @@
         };
 
 
-        function PercentageCircle({ percentage, color = '#1E88E5' }) {
-            const radius = 40;
+        function PercentageCircle({ percentage }) {
+            const radius = 30; // Increased radius
             const circumference = 2 * Math.PI * radius;
             const offset = circumference * (1 - percentage);
 
             return React.createElement(
                 'div',
-                { className: 'inline-block', title: (percentage * 100).toFixed(1) + '%' },
+                { className: 'inline-block align-middle mr-3', title: percentage * 100 + '%' },
                 React.createElement(
                     'svg',
                     {
                         className: 'percentage-circle',
-                        viewBox: '0 0 100 100',
+                        viewBox: '0 0 80 80', // Increased viewBox
                     },
                     React.createElement('circle', {
-                        className: 'bg',
-                        stroke: '#f0f0f0',
+                        className: 'circle-background',
+                        strokeWidth: '8', // Increased stroke width
                         fill: 'transparent',
                         r: radius,
-                        cx: '50',
-                        cy: '50',
+                        cx: '40',
+                        cy: '40',
                     }),
                     React.createElement('circle', {
-                        className: 'progress',
-                        stroke: color,
+                        className: 'circle-progress',
+                        strokeWidth: '8', // Increased stroke width
                         fill: 'transparent',
                         r: radius,
-                        cx: '50',
-                        cy: '50',
+                        cx: '40',
+                        cy: '40',
                         strokeDasharray: circumference,
                         strokeDashoffset: offset,
+                        style: { transition: 'stroke-dashoffset 0.5s ease' },
                     })
                 )
             );
@@ -582,30 +618,22 @@
 
             return React.createElement(
                 'div',
-                { className: `bg-white p-4 mb-4 server-card ${server.isOffline ? 'offline' : 'online'}` },
+                { className: `bg-white rounded-lg shadow-sm ${server.isOffline ? 'offline' : 'online'}` },
                 React.createElement(
                     'div',
-                    { className: 'grid-container' },
-                    [
-                        // Add more percentage-based visualizations
-                        React.createElement('div', { className: 'metric-card' },
-                            React.createElement('span', { className: 'kv-k' }, 'CPU Usage'),
-                            PercentageCircle({ 
-                                percentage: (100 - server.cpu_id_percent) / 100,
-                                color: '#E53935'
-                            })
-                        ),
-                        React.createElement('div', { className: 'metric-card' },
-                            React.createElement('span', { className: 'kv-k' }, 'Memory'),
-                            PercentageInfo({ used: (server.mem_really_used_mib / 1024).toFixed(2), total: (server.mem_total_mib / 1024).toFixed(2) })
-                        ),
-                        React.createElement('div', { className: 'metric-card' },
-                            React.createElement('span', { className: 'kv-k' }, 'Disk'),
-                            PercentageInfo({ used: BtoGB((server.root_disk_total_kb - server.root_disk_avail_kb) * 1024), total: BtoGB(server.root_disk_total_kb * 1024) })
-                        ),
-                        // Add more metrics as needed
-                    ]
+                    {
+                        className: ' p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors',
+                        onClick: onToggleExpand
+                    },
+                    React.createElement(
+                        'div',
+                        { className: `grid-container text-sm ` },
+                        selectedFields.map((key) =>
+                            React.createElement(KeyValue, { k: key, v: server[key] })
+                        )
+                    )
                 ),
+                isExpanded &&
                 React.createElement(
                     'div',
                     { className: 'p-3 border-t border-gray-200' },
@@ -802,17 +830,10 @@
                         const uptimeDays = `${Math.floor(server.uptime_s / 3600 / 24)}`
 
 
-                        const PercentageInfo = ({ used, total, unit = 'G', color = '#1E88E5' }) => React.createElement(
-                            'div',
-                            { className: 'flex items-center gap-4' },
-                            PercentageCircle({ percentage: used / total, color }),
-                            React.createElement(
-                                'div',
-                                { className: 'flex flex-col' },
-                                React.createElement('span', { className: 'text-lg font-medium' }, `${(used / 1).toFixed(1)}${unit}`),
-                                React.createElement('span', { className: 'text-sm text-gray-500' }, `of ${(total / 1).toFixed(1)}${unit}`)
-                            )
-                        );
+                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement('div', { className: 'flex justify-left items-center' },
+                            PercentageCircle({ percentage: (used / total).toFixed(2) }),
+                            React.createElement('span', null, `${(used / 1).toFixed(2)}/${(total / 1).toFixed(2)}${unit}`),
+                        )
 
 
                         // 更新 renderServers
@@ -858,11 +879,11 @@
 
             return React.createElement(
                 'div',
-                { className: 'min-h-screen bg-gray-100 p-4' },
+                { className: 'min-h-screen bg-white p-4' },
                 React.createElement(
                     'h1',
-                    { className: 'text-xl font-bold mb-4 text-center' },
-                    'Kunlun Server Monitor'
+                    { className: 'bauhaus-header' },
+                    'Kunlun Monitor'
                 ),
                 React.createElement(
                     'div',
