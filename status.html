@@ -43,11 +43,12 @@
             background: rgba(0, 0, 0, 0.04);
             border-radius: 6px;
             font-size: 0.75rem;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .operate-button:hover {
             background: rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
         }
 
         .offline {
@@ -65,13 +66,26 @@
             -webkit-backdrop-filter: blur(20px);
             border-radius: 12px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(0, 0, 0, 0.06);
+            transform-origin: center;
+            animation: cardAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .server-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         #trendChart {
@@ -87,6 +101,19 @@
             -webkit-backdrop-filter: blur(20px);
             border-radius: 16px;
             border: 1px solid rgba(0, 0, 0, 0.06);
+            animation: modalAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         select {
@@ -112,11 +139,24 @@
             justify-content: center;
             border-radius: 50%;
             background: rgba(0, 0, 0, 0.04);
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: rotateIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0);
+            }
         }
 
         .settings-button:hover {
             background: rgba(0, 0, 0, 0.08);
+            transform: rotate(90deg);
         }
 
         .checkbox-wrapper {
@@ -125,11 +165,22 @@
             gap: 0.5rem;
             padding: 0.5rem;
             border-radius: 8px;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
         .checkbox-wrapper:hover {
             background: rgba(0, 0, 0, 0.04);
+            transform: translateX(2px);
         }
 
         input[type="checkbox"] {
@@ -153,11 +204,25 @@
             border-radius: 8px;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .confirm-button:hover {
             background: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
         }
 
         #modal-root {
@@ -165,6 +230,23 @@
             z-index: 9999;
             width: 100%;
             height: 100%;
+        }
+
+        /* Add animation for expanded content */
+        .server-card > div:nth-child(2) {
+            animation: expandContent 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+        }
+
+        @keyframes expandContent {
+            from {
+                opacity: 0;
+                transform: scaleY(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
         }
     </style>
 </head>
