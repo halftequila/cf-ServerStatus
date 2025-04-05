@@ -7,100 +7,121 @@
     <title>Kunlun Monitoring Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Add Inter font for Apple-like typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f5f5f7;
-            color: #1d1d1f;
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.1) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.1) 0%, transparent 25%);
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
             gap: 1rem;
         }
 
         .kv-k {
             font-size: 0.75rem;
             font-weight: 500;
-            color: #86868b;
-            letter-spacing: -0.01em;
+            color: #94a3b8;
+            letter-spacing: 0.02em;
         }
 
         .kv-v {
             font-size: 0.875rem;
             font-weight: 500;
-            color: #1d1d1f;
+            color: #f1f5f9;
             margin-top: 0.25rem;
         }
 
         .operate-button {
             cursor: pointer;
             transition: all 0.2s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 0.75rem;
-            background: #0071e3;
+            padding: 0.75rem 1.5rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
             font-size: 0.875rem;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .operate-button:hover {
-            background: #0077ed;
             transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
         }
 
         .offline {
-            opacity: 0.8;
-            border-left: 2px solid #ff3b30;
+            border-left: 2px solid #ef4444;
         }
 
         .online {
-            border-left: 2px solid #30d158;
+            border-left: 2px solid #22c55e;
         }
 
         .server-card {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(30, 41, 59, 0.5);
             backdrop-filter: blur(20px);
-            border-radius: 1rem;
+            border-radius: 1.25rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .server-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
         }
 
-        .bg-success {
-            background-color: #30d158;
+        .server-card .metric-icon {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
         }
 
         #trendChart {
             min-height: 300px;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            background: white;
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(20px);
-            border-radius: 1.25rem;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .status-badge {
             display: inline-flex;
             align-items: center;
-            padding: 0.25rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 1rem;
             font-size: 0.875rem;
             font-weight: 500;
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .status-badge::before {
@@ -109,64 +130,152 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            margin-right: 0.5rem;
+            margin-right: 0.75rem;
         }
 
         .status-badge.online::before {
-            background: #30d158;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.5);
         }
 
         .status-badge.offline::before {
-            background: #ff3b30;
-        }
-
-        /* Fancy loading animation */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .loading {
-            animation: pulse 2s infinite;
+            background: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
         }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: transparent;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
+            background: rgba(59, 130, 246, 0.5);
+            border-radius: 3px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(59, 130, 246, 0.7);
         }
 
         /* Settings button animation */
         .settings-btn {
             transition: all 0.3s ease;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .settings-btn:hover {
             transform: rotate(90deg);
+            border-color: rgba(59, 130, 246, 0.5);
         }
 
         /* Percentage circle animation */
         .percentage-circle circle {
             transition: stroke-dashoffset 0.5s ease;
         }
+
+        /* Select styles */
+        .custom-select {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #f1f5f9;
+            border-radius: 1rem;
+            padding: 0.75rem 1rem;
+            appearance: none;
+            transition: all 0.2s ease;
+        }
+
+        .custom-select:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .custom-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Decorative elements */
+        .decorative-dots {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-image: radial-gradient(circle, #3b82f6 1px, transparent 1px);
+            background-size: 10px 10px;
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .decorative-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: -1;
+        }
+
+        /* Vector illustrations */
+        .server-illustration {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 120px;
+            height: 120px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Metric cards */
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+            padding: 1.5rem;
+            background: rgba(30, 41, 59, 0.5);
+            border-radius: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .metric-card:hover::before {
+            opacity: 1;
+        }
     </style>
 </head>
 
-<body class="min-h-screen p-6">
+<body class="p-6">
     <div id="root"></div>
     <div id="modal-root"></div>
 
@@ -635,17 +744,44 @@
             const [showTrendModal, setShowTrendModal] = useState(false);
 
             const KeyValue = ({ k, v }) => {
+                const getIcon = (key) => {
+                    const icons = {
+                        hostname: 'ri-server-line',
+                        organization: 'ri-building-2-line',
+                        country: 'ri-map-pin-2-line',
+                        region: 'ri-global-line',
+                        uptimeDays: 'ri-time-line',
+                        tasksInfo: 'ri-task-line',
+                        loadAverages: 'ri-cpu-line',
+                        memoryUsage: 'ri-database-2-line',
+                        trafficInfo: 'ri-exchange-line',
+                        connectionInfo: 'ri-link',
+                        netTxSpeedKB: 'ri-upload-2-line',
+                        netRxSpeedKB: 'ri-download-2-line',
+                        updateAt: 'ri-refresh-line',
+                        default: 'ri-dashboard-3-line'
+                    };
+                    return icons[key] || icons.default;
+                };
+
                 return React.createElement(
-                    'div', 
-                    { className: 'p-4 bg-white bg-opacity-50 rounded-xl backdrop-blur-sm border border-gray-100' },
+                    'div',
+                    { className: 'metric-card' },
+                    React.createElement('div', { className: 'metric-icon' },
+                        React.createElement('i', { className: getIcon(k) })
+                    ),
                     React.createElement('span', { className: 'kv-k', title: TITLES[k][2] }, TITLES[k][0]),
-                    React.createElement('div', { className: 'kv-v flex items-center' }, [v, TITLES[k][1]])
+                    React.createElement('div', { className: 'kv-v flex items-center gap-2' }, [v, TITLES[k][1]])
                 );
             };
 
             return React.createElement(
                 'div',
-                { className: `server-card ${server.isOffline ? 'offline' : 'online'} mb-4` },
+                { className: `server-card ${server.isOffline ? 'offline' : 'online'} mb-6` },
+                // Add server illustration
+                React.createElement('div', { className: 'server-illustration' },
+                    React.createElement('i', { className: 'ri-server-fill text-8xl' })
+                ),
                 React.createElement(
                     'div',
                     {
@@ -914,7 +1050,33 @@
 
             return React.createElement(
                 'div',
-                { className: 'max-w-7xl mx-auto' },
+                { className: 'max-w-7xl mx-auto relative' },
+                // Add decorative elements
+                React.createElement('div', { 
+                    className: 'decorative-circle',
+                    style: {
+                        width: '300px',
+                        height: '300px',
+                        top: '-150px',
+                        left: '-150px'
+                    }
+                }),
+                React.createElement('div', { 
+                    className: 'decorative-circle',
+                    style: {
+                        width: '200px',
+                        height: '200px',
+                        bottom: '50px',
+                        right: '-100px'
+                    }
+                }),
+                React.createElement('div', { 
+                    className: 'decorative-dots',
+                    style: {
+                        top: '100px',
+                        right: '50px'
+                    }
+                }),
                 React.createElement(
                     'div',
                     { className: 'flex items-center justify-between mb-8' },
