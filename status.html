@@ -7,46 +7,14 @@
     <title>Kunlun Monitoring Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
+    <!-- SF Pro Display Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
     <style>
-        :root {
-            --bg-color: #e0e5ec;
-            --text-color: #2d3436;
-            --shadow-color: #a3b1c6;
-            --highlight-color: #ffffff;
-            --accent-color: #4a9eff;
-        }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-
-        .neu-shadow {
-            box-shadow: 8px 8px 15px var(--shadow-color),
-                       -8px -8px 15px var(--highlight-color);
-        }
-
-        .neu-shadow-inset {
-            box-shadow: inset 4px 4px 8px var(--shadow-color),
-                       inset -4px -4px 8px var(--highlight-color);
-        }
-
-        .neu-button {
-            background: var(--bg-color);
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            transition: all 0.2s ease;
-            box-shadow: 5px 5px 10px var(--shadow-color),
-                       -5px -5px 10px var(--highlight-color);
-        }
-
-        .neu-button:active {
-            box-shadow: inset 3px 3px 6px var(--shadow-color),
-                       inset -3px -3px 6px var(--highlight-color);
+            background-color: #f0f0f0;
+            color: #1d1d1f;
         }
 
         .grid-container {
@@ -56,99 +24,127 @@
         }
 
         .kv-k {
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            color: #64748b;
-            letter-spacing: -0.01em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .kv-v {
             font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-color);
+            font-weight: 500;
+            color: #1d1d1f;
             letter-spacing: -0.02em;
             margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .operate-button {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #E53935;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .operate-button:hover {
+            color: #C62828;
+        }
+
+        .offline {
+            opacity: 0.8;
+            border-left: 4px solid #E53935;
+        }
+
+        .online {
+            border-left: 4px solid #1E88E5;
         }
 
         .server-card {
-            background: var(--bg-color);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
+            background: #fff;
+            border-radius: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
         }
 
         .server-card:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
 
-        .offline {
-            border-left: 3px solid #ff3b30;
+        #trendChart {
+            min-height: 300px;
+            border-radius: 0;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #1E88E5;
         }
 
-        .online {
-            border-left: 3px solid #34c759;
-        }
-
-        /* Enhanced PercentageCircle styles */
-        .percentage-circle {
-            width: 80px;
-            height: 80px;
-            position: relative;
-            margin: 0.5rem 0;
-        }
-
-        .percentage-circle svg {
-            transform: rotate(-90deg);
-        }
-
-        .percentage-circle circle {
-            fill: none;
-            stroke-width: 8;
-            stroke-linecap: round;
-        }
-
-        .percentage-circle .bg {
-            stroke: rgba(0, 0, 0, 0.1);
-        }
-
-        .percentage-circle .progress {
-            stroke: var(--accent-color);
-            transition: stroke-dashoffset 0.5s ease;
-        }
-
-        .percentage-circle .value {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        /* Modal styles */
         .modal-content {
-            background: var(--bg-color);
-            border-radius: 1.5rem;
-            box-shadow: 8px 8px 15px var(--shadow-color),
-                       -8px -8px 15px var(--highlight-color);
+            background: #fff;
+            border-radius: 0;
+            border: 2px solid #1E88E5;
         }
 
         select {
-            background: var(--bg-color);
-            border: none;
-            border-radius: 10px;
-            padding: 0.75rem;
-            box-shadow: inset 3px 3px 6px var(--shadow-color),
-                       inset -3px -3px 6px var(--highlight-color);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+            border-radius: 0;
+            border: 2px solid #1E88E5;
         }
 
-        /* Chart container */
-        #trendChart {
-            background: var(--bg-color);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
-            box-shadow: inset 3px 3px 6px var(--shadow-color),
-                       inset -3px -3px 6px var(--highlight-color);
+        .settings-button {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            background: #1E88E5;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .settings-button:hover {
+            background: #1565C0;
+        }
+
+        /* Bauhaus-style circle progress */
+        svg.percentage-circle {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        svg.percentage-circle circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-width: 8;
+        }
+
+        svg.percentage-circle circle.bg {
+            stroke: #f0f0f0;
+        }
+
+        svg.percentage-circle circle.progress {
+            stroke: #1E88E5;
+        }
+
+        .metric-card {
+            padding: 1rem;
+            background: white;
+            border: 2px solid #1E88E5;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -216,42 +212,38 @@
         };
 
 
-        function PercentageCircle({ percentage, size = 80, label }) {
-            const radius = size * 0.4;
+        function PercentageCircle({ percentage, color = '#1E88E5' }) {
+            const radius = 40;
             const circumference = 2 * Math.PI * radius;
-            const progress = (percentage / 100) * circumference;
-            const dashoffset = circumference - progress;
+            const offset = circumference * (1 - percentage);
 
             return React.createElement(
                 'div',
-                { className: 'percentage-circle', style: { width: size, height: size } },
+                { className: 'inline-block', title: (percentage * 100).toFixed(1) + '%' },
                 React.createElement(
                     'svg',
-                    { width: size, height: size, viewBox: `0 0 ${size} ${size}` },
+                    {
+                        className: 'percentage-circle',
+                        viewBox: '0 0 100 100',
+                    },
                     React.createElement('circle', {
                         className: 'bg',
-                        cx: size / 2,
-                        cy: size / 2,
+                        stroke: '#f0f0f0',
+                        fill: 'transparent',
                         r: radius,
+                        cx: '50',
+                        cy: '50',
                     }),
                     React.createElement('circle', {
                         className: 'progress',
-                        cx: size / 2,
-                        cy: size / 2,
+                        stroke: color,
+                        fill: 'transparent',
                         r: radius,
+                        cx: '50',
+                        cy: '50',
                         strokeDasharray: circumference,
-                        strokeDashoffset: dashoffset,
+                        strokeDashoffset: offset,
                     })
-                ),
-                React.createElement(
-                    'div',
-                    { className: 'value' },
-                    `${Math.round(percentage)}%`
-                ),
-                label && React.createElement(
-                    'div',
-                    { className: 'text-xs text-center mt-2 text-gray-500' },
-                    label
                 )
             );
         }
@@ -283,17 +275,20 @@
         }
 
         const TrendModal = ({ clientId, onClose }) => {
+
             const [apiData, setApiData] = useState(null);
             const [chartData, setChartData] = useState(null);
-            const [dataLevel, setDataLevel] = useState('seconds');
-            const [selectedKeys, setSelectedKeys] = useState(null);
-            const [availableKeys, setAvailableKeys] = useState([]);
+            const [dataLevel, setDataLevel] = useState('seconds'); // 数据级别：seconds, minutes, hours
+            const [selectedKeys, setSelectedKeys] = useState(null); // 选中的 key 列表
+            const [availableKeys, setAvailableKeys] = useState([]); // 可选的 key 列表
 
+            // 数据级别选项
             const dataLevelOptions = [
                 { value: 'seconds', label: '最近一小时', title: '10秒递进' },
                 { value: 'minutes', label: '最近一天', title: '60秒递进' },
                 { value: 'hours', label: '最近一年', title: '60分钟递进' },
             ];
+
 
             const apiObjectKeys = {
                 uptime_s: ["运行时间", "秒", "系统运行的总时间（秒）"],
@@ -504,83 +499,61 @@
 
             return React.createElement(
                 'div',
-                { className: 'fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-8' },
+                { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4' },
                 React.createElement(
                     'div',
-                    { className: 'modal-content w-full max-w-4xl p-6' },
+                    { className: 'bg-white rounded-lg p-2 py-4 w-full max-w-4xl' },
                     React.createElement(
                         'div',
-                        { className: 'flex justify-between items-center mb-6' },
-                        React.createElement('h2', { className: 'text-xl font-semibold' }, '统计数据'),
+                        { className: 'flex justify-between items-center mb-4 ' },
+                        React.createElement('h2', { className: 'text-sm font-bold' }, '统计数据'),
                         React.createElement(
                             'button',
-                            { 
-                                onClick: onClose, 
-                                className: 'neu-button'
-                            },
-                            '关闭'
+                            { onClick: onClose, className: 'text-sm text-gray-500 hover:text-gray-700' },
+                            'Close'
                         )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'grid grid-cols-2 gap-6 mb-6' },
+                        { className: 'grid grid-cols-2 gap-4 mb-4' },
+                        // 数据级别单选框
                         React.createElement(
                             'div',
-                            { className: 'neu-shadow-inset p-2 rounded-xl' },
+                            null,
                             React.createElement(
                                 'select',
                                 {
                                     value: dataLevel,
                                     onChange: handleDataLevelChange,
-                                    className: 'w-full bg-transparent outline-none'
+                                    className: 'text-sm w-full p-2 border rounded',
                                 },
                                 dataLevelOptions.map((option) =>
-                                    React.createElement(
-                                        'option',
-                                        { 
-                                            key: option.value, 
-                                            value: option.value, 
-                                            title: option.title,
-                                            className: 'bg-[var(--bg-color)]'
-                                        },
-                                        option.label
-                                    )
+                                    React.createElement('option', { key: option.value, value: option.value, title: option.title }, option.label)
                                 )
                             )
                         ),
+                        // 多选框（数据加载后显示）
                         availableKeys.length > 0 &&
                         React.createElement(
                             'div',
-                            { className: 'neu-shadow-inset p-2 rounded-xl' },
+                            null,
                             React.createElement(
                                 'select',
                                 {
                                     multiple: false,
                                     value: selectedKeys,
                                     onChange: handleSelectedKeysChange,
-                                    className: 'w-full bg-transparent outline-none'
+                                    className: 'text-sm w-full p-2 border rounded',
                                 },
                                 availableKeys.map((key) =>
-                                    React.createElement(
-                                        'option',
-                                        { 
-                                            key: key, 
-                                            value: key, 
-                                            title: apiObjectKeys[key][2],
-                                            className: 'bg-[var(--bg-color)]'
-                                        },
-                                        apiObjectKeys[key][0]
-                                    )
+                                    React.createElement('option', { key: key, value: key, title: apiObjectKeys[key][2] }, apiObjectKeys[key][0])
                                 )
                             )
                         )
                     ),
                     React.createElement(
                         'div',
-                        { 
-                            className: 'neu-shadow-inset rounded-xl p-6',
-                            style: { minHeight: '400px' }
-                        },
+                        { className: 'relative', style: { minHeight: '350px' } },
                         React.createElement('canvas', { id: 'trendChart' })
                     )
                 )
@@ -599,95 +572,73 @@
             const [showTrendModal, setShowTrendModal] = useState(false);
 
             // KeyValue 组件：用于渲染 k:value 对
-            const KeyValue = ({ k, v, showPercentage, percentage }) => {
+            const KeyValue = ({ k, v }) => {
                 return React.createElement(
-                    'div',
-                    { className: 'neu-shadow p-4 rounded-xl' },
-                    React.createElement('span', { className: 'kv-k', title: TITLES[k][2] }, TITLES[k][0]),
-                    showPercentage ? 
-                        React.createElement(
-                            'div',
-                            { className: 'flex flex-col items-center justify-center mt-2' },
-                            React.createElement(PercentageCircle, { 
-                                percentage: parseFloat(percentage), 
-                                size: 100,
-                                label: v 
-                            })
-                        ) :
-                        React.createElement('div', { className: 'kv-v' }, [v, TITLES[k][1]])
+                    'div', {},
+                    React.createElement('span', { className: 'kv-k text-gray-400 text-xs', title: TITLES[k][2] }, TITLES[k][0]),
+                    React.createElement('div', { className: 'kv-v text-gray-700' }, [v, TITLES[k][1]])
                 );
             };
 
             return React.createElement(
                 'div',
-                { 
-                    className: `neu-shadow server-card ${server.isOffline ? 'offline' : 'online'}`,
-                    onClick: onToggleExpand
-                },
+                { className: `bg-white p-4 mb-4 server-card ${server.isOffline ? 'offline' : 'online'}` },
                 React.createElement(
                     'div',
                     { className: 'grid-container' },
-                    selectedFields.map((key) => {
-                        // Add percentage visualization for specific metrics
-                        const showPercentage = [
-                            'cpu_us_percent',
-                            'cpu_sy_percent',
-                            'diskUtilization',
-                            'mem_used_total_percent'
-                        ].includes(key);
-
-                        return React.createElement(KeyValue, { 
-                            k: key, 
-                            v: server[key],
-                            showPercentage: showPercentage,
-                            percentage: showPercentage ? server[key] : null
-                        });
-                    })
+                    [
+                        // Add more percentage-based visualizations
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('span', { className: 'kv-k' }, 'CPU Usage'),
+                            PercentageCircle({ 
+                                percentage: (100 - server.cpu_id_percent) / 100,
+                                color: '#E53935'
+                            })
+                        ),
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('span', { className: 'kv-k' }, 'Memory'),
+                            PercentageInfo({ used: (server.mem_really_used_mib / 1024).toFixed(2), total: (server.mem_total_mib / 1024).toFixed(2) })
+                        ),
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('span', { className: 'kv-k' }, 'Disk'),
+                            PercentageInfo({ used: BtoGB((server.root_disk_total_kb - server.root_disk_avail_kb) * 1024), total: BtoGB(server.root_disk_total_kb * 1024) })
+                        ),
+                        // Add more metrics as needed
+                    ]
                 ),
-                isExpanded &&
                 React.createElement(
                     'div',
-                    { className: 'mt-4 pt-4 border-t border-gray-200' },
+                    { className: 'p-3 border-t border-gray-200' },
                     React.createElement(
                         'div',
-                        { className: 'grid-container' },
+                        { className: 'grid-container text-sm' },
                         Object.keys(TITLES)
                             .filter((key) => TITLES.hasOwnProperty(key) && !selectedFields.includes(key))
-                            .map((key) => {
-                                const showPercentage = [
-                                    'cpu_us_percent',
-                                    'cpu_sy_percent',
-                                    'diskUtilization',
-                                    'mem_used_total_percent'
-                                ].includes(key);
-
-                                return React.createElement(KeyValue, {
+                            .map((key) =>
+                                React.createElement(KeyValue, {
                                     k: key,
                                     v: server[key],
-                                    showPercentage: showPercentage,
-                                    percentage: showPercentage ? server[key] : null
-                                });
-                            })
-                    ),
-                    React.createElement(
-                        'button',
-                        {
-                            onClick: (e) => {
-                                e.stopPropagation();
-                                setShowTrendModal(true);
-                            },
-                            className: 'neu-button mt-4'
-                        },
-                        '查看统计'
+                                })
+                            ),
+                        React.createElement(
+                            'div', {},
+                            React.createElement('span', { className: 'kv-k text-gray-400 text-xs' }, `操作`),
+                            React.createElement('div',
+                                {
+                                    onClick: () => setShowTrendModal(true),
+                                    className: 'operate-button',
+                                },
+                                '统计'
+                            )
+                        )
                     )
                 ),
-                showTrendModal && ReactDOM.createPortal(
-                    React.createElement(TrendModal, {
-                        clientId: server.client_id,
-                        onClose: () => setShowTrendModal(false)
-                    }),
-                    modalRoot
-                )
+
+
+                showTrendModal && ReactDOM.createPortal(React.createElement(TrendModal, {
+                    clientId: server.client_id,
+                    onClose: () => setShowTrendModal(false),
+                }), modalRoot)
             );
         });
 
@@ -851,10 +802,17 @@
                         const uptimeDays = `${Math.floor(server.uptime_s / 3600 / 24)}`
 
 
-                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement('div', { className: 'flex justify-left items-center' },
-                            PercentageCircle({ percentage: (used / total).toFixed(2) }),
-                            React.createElement('span', null, `${(used / 1).toFixed(2)}/${(total / 1).toFixed(2)}${unit}`),
-                        )
+                        const PercentageInfo = ({ used, total, unit = 'G', color = '#1E88E5' }) => React.createElement(
+                            'div',
+                            { className: 'flex items-center gap-4' },
+                            PercentageCircle({ percentage: used / total, color }),
+                            React.createElement(
+                                'div',
+                                { className: 'flex flex-col' },
+                                React.createElement('span', { className: 'text-lg font-medium' }, `${(used / 1).toFixed(1)}${unit}`),
+                                React.createElement('span', { className: 'text-sm text-gray-500' }, `of ${(total / 1).toFixed(1)}${unit}`)
+                            )
+                        );
 
 
                         // 更新 renderServers
@@ -900,36 +858,35 @@
 
             return React.createElement(
                 'div',
-                { className: 'min-h-screen p-8' },
+                { className: 'min-h-screen bg-gray-100 p-4' },
                 React.createElement(
-                    'div',
-                    { className: 'neu-shadow p-6 rounded-2xl mb-8 text-center' },
-                    React.createElement(
-                        'h1',
-                        { className: 'text-2xl font-bold mb-4' },
-                        'Kunlun Server Monitor'
-                    ),
-                    React.createElement(
-                        'div',
-                        { className: 'flex justify-between items-center' },
-                        React.createElement(
-                            'p',
-                            { className: 'text-lg' },
-                            `Online ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`
-                        ),
-                        React.createElement(
-                            'button',
-                            {
-                                className: 'neu-button',
-                                onClick: () => setShowFieldSelector(true)
-                            },
-                            '⚙️ Settings'
-                        )
-                    )
+                    'h1',
+                    { className: 'text-xl font-bold mb-4 text-center' },
+                    'Kunlun Server Monitor'
                 ),
                 React.createElement(
                     'div',
                     { className: 'space-y-2' },
+                    React.createElement(
+                        'div',
+                        {
+                            className: 'p-3 py-0 cursor-pointer rounded-lg transition-colors flex items-center justify-between text-sm',
+                        }, [
+                        // server.insert_utc_ts 最近更新时间超过 60 秒视为离线
+                        React.createElement('p', {}, `Online    ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`),
+                        React.createElement(
+                            'button',
+                            {
+                                className: 'p-1 text-gray-500 hover:text-gray-700',
+                                onClick: (e) => {
+                                    e.stopPropagation();
+                                    setShowFieldSelector(true);
+                                }
+                            },
+                            '⚙️'
+                        )
+                    ]
+                    ),
                     servers.map(server =>
                         React.createElement(Server, {
                             key: server.machine_id,
@@ -944,62 +901,37 @@
                 showFieldSelector &&
                 React.createElement(
                     'div',
-                    { className: 'fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center p-8' },
+                    { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center' },
                     React.createElement(
                         'div',
-                        { className: 'modal-content w-full max-w-2xl p-6' },
-                        React.createElement(
-                            'div',
-                            { className: 'flex justify-between items-center mb-6' },
-                            React.createElement('h3', { className: 'text-xl font-semibold' }, '显示设置'),
+                        { className: 'bg-white p-4 rounded-lg shadow-lg' },
+                        [
+                            React.createElement('div', { className: 'py-2 ' }, '选择优先显示字段'),
                             React.createElement(
-                                'button',
-                                { 
-                                    className: 'neu-button',
-                                    onClick: () => setShowFieldSelector(false)
-                                },
-                                '关闭'
-                            )
-                        ),
-                        React.createElement(
-                            'div',
-                            { className: 'grid grid-cols-3 gap-4' },
-                            Object.keys(TITLES).map((key) =>
-                                React.createElement(
-                                    'label',
-                                    { 
-                                        key,
-                                        className: `neu-shadow-inset p-4 rounded-xl flex items-center cursor-pointer ${
-                                            selectedFields.includes(key) ? 'bg-[var(--accent-color)] bg-opacity-10' : ''
-                                        }`
-                                    },
+                                'div',
+                                { className: 'grid grid-cols-3 gap-2 p-2' },
+
+                                Object.keys(TITLES).map((key) =>
                                     React.createElement(
-                                        'div',
-                                        { className: 'relative w-5 h-5 mr-3' },
+                                        'label',
+                                        { key, className: 'flex items-center text-gray-400 text-xs' },
                                         React.createElement('input', {
                                             type: 'checkbox',
                                             checked: selectedFields.includes(key),
                                             onChange: () => handleFieldSelection(key),
-                                            className: 'absolute opacity-0 w-full h-full cursor-pointer'
                                         }),
-                                        React.createElement(
-                                            'div',
-                                            { 
-                                                className: `w-full h-full rounded-md ${
-                                                    selectedFields.includes(key) 
-                                                        ? 'neu-shadow-inset bg-[var(--accent-color)]' 
-                                                        : 'neu-shadow'
-                                                }`
-                                            }
-                                        )
-                                    ),
-                                    React.createElement(
-                                        'span',
-                                        { className: 'text-sm' },
-                                        TITLES[key][0]
+                                        React.createElement('span', { className: 'ml-2' }, TITLES[key][0])
                                     )
                                 )
                             )
+                        ],
+                        React.createElement(
+                            'button',
+                            {
+                                className: 'mt-4 py-2 px-4 text-xs inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20',
+                                onClick: () => setShowFieldSelector(false)
+                            },
+                            '确认'
                         )
                     )
                 )
