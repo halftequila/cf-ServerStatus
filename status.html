@@ -830,7 +830,7 @@
                         const uptimeDays = `${Math.floor(server.uptime_s / 3600 / 24)}`
 
 
-                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement('div', { className: 'flex justify-left items-center' },
+                        const PercentageInfo = ({ used, total}) => React.createElement('div', { className: 'flex justify-left items-center' },
                             PercentageCircle({ percentage: (used / total).toFixed(2) }),
                             React.createElement('span', null, `${(used / 1).toFixed(2)}/${(total / 1).toFixed(2)}${unit}`),
                         )
