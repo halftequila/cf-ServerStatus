@@ -688,7 +688,7 @@
             // 从 localStorage 中读取 selectedFields，如果不存在则使用默认值
             const [selectedFields, setSelectedFields] = useState(() => {
                 const savedFields = localStorage.getItem('selectedFields');
-                return savedFields ? JSON.parse(savedFields) : ['hostname', 'loadAverages', 'memoryUsage'];
+                return savedFields ? JSON.parse(savedFields) : ['hostname', 'region', 'cpu_user', 'memoryUsage', 'rootDiskInfo', 'netTxSpeedKB', 'netRxSpeedKB'];
             });
 
             const prevServersRef = useRef({}); // 存储上一次的服务器数据
