@@ -7,51 +7,120 @@
     <title>Kunlun Monitoring Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SF Pro Display Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
     <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-            gap: 0.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+            gap: 1rem;
         }
 
         .kv-k {
-            font-size: 0.7rem;
-            font-weight: lighter;
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: #86868b;
+            letter-spacing: -0.01em;
         }
 
         .kv-v {
-            font-size: 0.8rem;
-            font-weight: normal;
-            color: #2d2d2d;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            letter-spacing: -0.02em;
+            margin-top: 0.25rem;
         }
 
         .operate-button {
             cursor: pointer;
+            transition: all 0.2s ease;
+            color: #0066cc;
+            font-size: 0.875rem;
+        }
+
+        .operate-button:hover {
+            color: #0077ed;
         }
 
         .offline {
             opacity: 0.8;
-            border-left: 2px solid #e49797;
+            border-left: 2px solid #ff3b30;
         }
 
         .online {
-            border-left: 2px solid #83dc6e;
+            border-left: 2px solid #34c759;
         }
 
         .bg-success {
-            background-color: #83dc6e;
+            background-color: #34c759;
+        }
+
+        .server-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .server-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         #trendChart {
             min-height: 300px;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            background: white;
         }
 
-        #modal-root {
-            position: fixed;
-            z-index: 9999;
-            width: 100%;
-            height: 100%;
+        .modal-content {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 1.25rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.5rem center;
+            background-size: 1em;
+            padding-right: 2.5rem;
+        }
+
+        .settings-button {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.04);
+            transition: all 0.2s ease;
+        }
+
+        .settings-button:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Apple-style circle progress */
+        svg circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
         }
     </style>
 </head>
