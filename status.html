@@ -13,29 +13,29 @@
     <style>
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f5f5f7;
+            background-color: #e0e5ec;
             color: #1d1d1f;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+            gap: 1.5rem;
         }
 
         .kv-k {
             font-size: 0.75rem;
-            font-weight: 400;
-            color: #86868b;
+            font-weight: 500;
+            color: #6b7280;
             letter-spacing: -0.01em;
         }
 
         .kv-v {
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
             color: #1d1d1f;
             letter-spacing: -0.02em;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
         }
 
         .operate-button {
@@ -43,10 +43,14 @@
             transition: all 0.2s ease;
             color: #0066cc;
             font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background: #e0e5ec;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
         }
 
         .operate-button:hover {
-            color: #0077ed;
+            box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
         }
 
         .offline {
@@ -63,64 +67,103 @@
         }
 
         .server-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: #e0e5ec;
             border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            border: none;
+            padding: 1.5rem;
         }
 
         .server-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 12px 12px 20px #b8b9be, -12px -12px 20px #ffffff;
         }
 
         #trendChart {
             min-height: 300px;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            background: #e0e5ec;
+            box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
         }
 
         .modal-content {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: #e0e5ec;
             border-radius: 1.25rem;
-            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+            border: none;
         }
 
         select {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 0.5rem center;
-            background-size: 1em;
-            padding-right: 2.5rem;
+            background-color: #e0e5ec;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.2s ease;
+        }
+
+        select:focus {
+            box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
+            outline: none;
         }
 
         .settings-button {
-            width: 2rem;
-            height: 2rem;
+            width: 2.5rem;
+            height: 2.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: rgba(0, 0, 0, 0.04);
+            background: #e0e5ec;
+            box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #ffffff;
             transition: all 0.2s ease;
         }
 
         .settings-button:hover {
-            background: rgba(0, 0, 0, 0.08);
+            box-shadow: inset 3px 3px 6px #b8b9be, inset -3px -3px 6px #ffffff;
         }
 
-        /* Apple-style circle progress */
-        svg circle {
+        /* Enhanced circle progress */
+        .percentage-circle {
+            width: 3rem;
+            height: 3rem;
+            margin-right: 1rem;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .percentage-circle svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        svg circle.progress-bg {
+            stroke: #e0e5ec;
+            stroke-width: 8;
+            fill: none;
+            filter: drop-shadow(2px 2px 2px #b8b9be);
+        }
+
+        svg circle.progress {
             transition: stroke-dashoffset 0.35s;
             transform: rotate(-90deg);
             transform-origin: 50% 50%;
+            stroke: #0066cc;
+            stroke-width: 8;
+            fill: none;
+            filter: drop-shadow(-2px -2px 2px #ffffff);
+        }
+
+        .percentage-text {
+            position: absolute;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1d1d1f;
         }
     </style>
 </head>
@@ -189,42 +232,57 @@
 
 
         function PercentageCircle({ percentage }) {
-            const radius = 20; // 圆环半径
-            const circumference = 2 * Math.PI * radius; // 圆环周长
-            const offset = circumference * (1 - percentage); // 根据百分比计算 offset
+            const radius = 40; // Increased radius
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference * (1 - percentage);
+            const strokeWidth = 8; // Thicker stroke
 
             return React.createElement(
                 'div',
-                { className: 'inline-block align-middle mr-1', title: percentage * 100 + '%' },
+                { className: 'percentage-circle', title: (percentage * 100).toFixed(1) + '%' },
                 React.createElement(
                     'svg',
                     {
-                        className: 'w-4 h-4',
-                        viewBox: '0 0 50 50',
+                        viewBox: '0 0 100 100',
                     },
-                    React.createElement('circle', {
-                        className: 'text-gray-200 stroke-current',
-                        strokeWidth: '7',
-                        fill: 'transparent',
-                        r: radius,
-                        cx: '25',
-                        cy: '25',
-                    }),
-                    React.createElement('circle', {
-                        className: 'text-blue-500 stroke-current',
-                        strokeWidth: '7',
-                        fill: 'transparent',
-                        r: radius,
-                        cx: '25',
-                        cy: '25',
-                        strokeDasharray: circumference,
-                        strokeDashoffset: offset,
-                        style: { transition: 'stroke-dashoffset 0.5s ease' },
-                    })
+                    [
+                        React.createElement('circle', {
+                            key: 'bg',
+                            className: 'progress-bg',
+                            r: radius,
+                            cx: '50',
+                            cy: '50',
+                        }),
+                        React.createElement('circle', {
+                            key: 'progress',
+                            className: 'progress',
+                            r: radius,
+                            cx: '50',
+                            cy: '50',
+                            strokeDasharray: circumference,
+                            strokeDashoffset: offset,
+                        })
+                    ]
+                ),
+                React.createElement(
+                    'span',
+                    { className: 'percentage-text' },
+                    (percentage * 100).toFixed(1) + '%'
                 )
             );
         }
 
+        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement(
+            'div',
+            { className: 'flex items-center' },
+            PercentageCircle({ percentage: (used / total) }),
+            React.createElement(
+                'div',
+                { className: 'flex flex-col ml-3' },
+                React.createElement('span', { className: 'text-sm font-semibold' }, `${(used / 1).toFixed(2)}${unit}`),
+                React.createElement('span', { className: 'text-xs text-gray-500' }, `/ ${(total / 1).toFixed(2)}${unit}`)
+            )
+        );
 
         function calculateAndNormalizeKeys(obj, keys) {
             // 对累计求和占比类字段进行求出分别百分比，例如 CPU 统计信息
@@ -771,10 +829,17 @@
                         const uptimeDays = `${Math.floor(server.uptime_s / 3600 / 24)}`
 
 
-                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement('div', { className: 'flex justify-left items-center' },
-                            PercentageCircle({ percentage: (used / total).toFixed(2) }),
-                            React.createElement('span', null, `${(used / 1).toFixed(2)}/${(total / 1).toFixed(2)}${unit}`),
-                        )
+                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement(
+                            'div',
+                            { className: 'flex items-center' },
+                            PercentageCircle({ percentage: (used / total) }),
+                            React.createElement(
+                                'div',
+                                { className: 'flex flex-col ml-3' },
+                                React.createElement('span', { className: 'text-sm font-semibold' }, `${(used / 1).toFixed(2)}${unit}`),
+                                React.createElement('span', { className: 'text-xs text-gray-500' }, `/ ${(total / 1).toFixed(2)}${unit}`)
+                            )
+                        );
 
 
                         // 更新 renderServers
