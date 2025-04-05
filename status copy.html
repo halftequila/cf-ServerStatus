@@ -7,44 +7,222 @@
     <title>Kunlun Monitoring Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- SF Pro Font -->
+    <link rel="stylesheet" href="https://fonts.cdnfonts.com/css/sf-pro-display">
 
     <style>
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+        }
+
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
         .kv-k {
-            font-size: 0.7rem;
-            font-weight: lighter;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #86868b;
         }
 
         .kv-v {
-            font-size: 0.8rem;
-            font-weight: normal;
-            color: #2d2d2d;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-top: 0.25rem;
         }
 
         .operate-button {
             cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .operate-button:hover {
+            background: rgba(0, 0, 0, 0.08);
+            transform: translateY(-1px);
         }
 
         .offline {
             opacity: 0.8;
-            border-left: 2px solid #e49797;
+            border-left: 2px solid #ff3b30;
         }
 
         .online {
-            border-left: 2px solid #83dc6e;
+            border-left: 2px solid #34c759;
         }
 
-        .bg-success {
-            background-color: #83dc6e;
+        .server-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transform-origin: center;
+            animation: cardAppear 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .server-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
         }
 
         #trendChart {
             min-height: 300px;
+            border-radius: 12px;
+            padding: 1rem;
+            background: white;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            animation: modalAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        select {
+            background: rgba(0, 0, 0, 0.04);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            color: #1d1d1f;
+            transition: all 0.2s ease;
+        }
+
+        select:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .settings-button {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.04);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: rotateIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes rotateIn {
+            from {
+                opacity: 0;
+                transform: rotate(-180deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0);
+            }
+        }
+
+        .settings-button:hover {
+            background: rgba(0, 0, 0, 0.08);
+            transform: rotate(90deg);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .checkbox-wrapper:hover {
+            background: rgba(0, 0, 0, 0.04);
+            transform: translateX(2px);
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #86868b;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #0071e3;
+            border-color: #0071e3;
+        }
+
+        .confirm-button {
+            background: #0071e3;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .confirm-button:hover {
+            background: #0077ed;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
         }
 
         #modal-root {
@@ -52,6 +230,23 @@
             z-index: 9999;
             width: 100%;
             height: 100%;
+        }
+
+        /* Add animation for expanded content */
+        .server-card > div:nth-child(2) {
+            animation: expandContent 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+        }
+
+        @keyframes expandContent {
+            from {
+                opacity: 0;
+                transform: scaleY(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
         }
     </style>
 </head>
@@ -407,23 +602,26 @@
 
             return React.createElement(
                 'div',
-                { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4' },
+                { className: 'fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4' },
                 React.createElement(
                     'div',
-                    { className: 'bg-white rounded-lg p-2 py-4 w-full max-w-4xl' },
+                    { className: 'modal-content p-6 w-full max-w-4xl' },
                     React.createElement(
                         'div',
-                        { className: 'flex justify-between items-center mb-4 ' },
-                        React.createElement('h2', { className: 'text-sm font-bold' }, '统计数据'),
+                        { className: 'flex justify-between items-center mb-6' },
+                        React.createElement('h2', { className: 'text-lg font-medium' }, '统计数据'),
                         React.createElement(
                             'button',
-                            { onClick: onClose, className: 'text-sm text-gray-500 hover:text-gray-700' },
-                            'Close'
+                            { 
+                                onClick: onClose, 
+                                className: 'settings-button'
+                            },
+                            '✕'
                         )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'grid grid-cols-2 gap-4 mb-4' },
+                        { className: 'grid grid-cols-1 md:grid-cols-2 gap-4 mb-6' },
                         // 数据级别单选框
                         React.createElement(
                             'div',
@@ -433,7 +631,7 @@
                                 {
                                     value: dataLevel,
                                     onChange: handleDataLevelChange,
-                                    className: 'text-sm w-full p-2 border rounded',
+                                    className: 'w-full',
                                 },
                                 dataLevelOptions.map((option) =>
                                     React.createElement('option', { key: option.value, value: option.value, title: option.title }, option.label)
@@ -451,7 +649,7 @@
                                     multiple: false,
                                     value: selectedKeys,
                                     onChange: handleSelectedKeysChange,
-                                    className: 'text-sm w-full p-2 border rounded',
+                                    className: 'w-full',
                                 },
                                 availableKeys.map((key) =>
                                     React.createElement('option', { key: key, value: key, title: apiObjectKeys[key][2] }, apiObjectKeys[key][0])
@@ -461,7 +659,7 @@
                     ),
                     React.createElement(
                         'div',
-                        { className: 'relative', style: { minHeight: '350px' } },
+                        { className: 'bg-white rounded-xl shadow-sm', style: { minHeight: '350px' } },
                         React.createElement('canvas', { id: 'trendChart' })
                     )
                 )
@@ -490,16 +688,16 @@
 
             return React.createElement(
                 'div',
-                { className: `bg-white rounded-lg shadow-sm ${server.isOffline ? 'offline' : 'online'}` },
+                { className: `server-card ${server.isOffline ? 'offline' : 'online'}` },
                 React.createElement(
                     'div',
                     {
-                        className: ' p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors',
+                        className: 'p-4 cursor-pointer hover:bg-gray-50/50 rounded-lg transition-colors',
                         onClick: onToggleExpand
                     },
                     React.createElement(
                         'div',
-                        { className: `grid-container text-sm ` },
+                        { className: `grid-container` },
                         selectedFields.map((key) =>
                             React.createElement(KeyValue, { k: key, v: server[key] })
                         )
@@ -508,10 +706,10 @@
                 isExpanded &&
                 React.createElement(
                     'div',
-                    { className: 'p-3 border-t border-gray-200' },
+                    { className: 'p-4 border-t border-gray-100' },
                     React.createElement(
                         'div',
-                        { className: 'grid-container text-sm' },
+                        { className: 'grid-container' },
                         Object.keys(TITLES)
                             .filter((key) => TITLES.hasOwnProperty(key) && !selectedFields.includes(key))
                             .map((key) =>
@@ -522,18 +720,17 @@
                             ),
                         React.createElement(
                             'div', {},
-                            React.createElement('span', { className: 'kv-k text-gray-400 text-xs' }, `操作`),
+                            React.createElement('span', { className: 'kv-k' }, `操作`),
                             React.createElement('div',
                                 {
                                     onClick: () => setShowTrendModal(true),
-                                    className: 'operate-button',
+                                    className: 'operate-button mt-1',
                                 },
                                 '统计'
                             )
                         )
                     )
                 ),
-
 
                 showTrendModal && ReactDOM.createPortal(React.createElement(TrendModal, {
                     clientId: server.client_id,
@@ -751,26 +948,27 @@
 
             return React.createElement(
                 'div',
-                { className: 'min-h-screen bg-gray-100 p-4' },
+                { className: 'min-h-screen bg-[#f5f5f7] p-6' },
                 React.createElement(
                     'h1',
-                    { className: 'text-xl font-bold mb-4 text-center' },
+                    { className: 'text-2xl font-semibold mb-6 text-center tracking-tight' },
                     'Kunlun Server Monitor'
                 ),
                 React.createElement(
                     'div',
-                    { className: 'space-y-2' },
+                    { className: 'space-y-3 max-w-6xl mx-auto' },
                     React.createElement(
                         'div',
                         {
-                            className: 'p-3 py-0 cursor-pointer rounded-lg transition-colors flex items-center justify-between text-sm',
+                            className: 'p-4 cursor-pointer rounded-lg transition-colors flex items-center justify-between',
                         }, [
-                        // server.insert_utc_ts 最近更新时间超过 60 秒视为离线
-                        React.createElement('p', {}, `Online    ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`),
+                        React.createElement('p', { className: 'text-sm font-medium' }, 
+                            `Online    ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`
+                        ),
                         React.createElement(
                             'button',
                             {
-                                className: 'p-1 text-gray-500 hover:text-gray-700',
+                                className: 'settings-button',
                                 onClick: (e) => {
                                     e.stopPropagation();
                                     setShowFieldSelector(true);
@@ -794,37 +992,40 @@
                 showFieldSelector &&
                 React.createElement(
                     'div',
-                    { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center' },
+                    { className: 'fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center' },
                     React.createElement(
                         'div',
-                        { className: 'bg-white p-4 rounded-lg shadow-lg' },
+                        { className: 'modal-content p-6 max-w-lg w-full mx-4' },
                         [
-                            React.createElement('div', { className: 'py-2 ' }, '选择优先显示字段'),
+                            React.createElement('div', { className: 'text-lg font-medium mb-4' }, '选择优先显示字段'),
                             React.createElement(
                                 'div',
-                                { className: 'grid grid-cols-3 gap-2 p-2' },
-
+                                { className: 'grid grid-cols-2 md:grid-cols-3 gap-2' },
                                 Object.keys(TITLES).map((key) =>
                                     React.createElement(
                                         'label',
-                                        { key, className: 'flex items-center text-gray-400 text-xs' },
+                                        { key, className: 'checkbox-wrapper' },
                                         React.createElement('input', {
                                             type: 'checkbox',
                                             checked: selectedFields.includes(key),
                                             onChange: () => handleFieldSelection(key),
                                         }),
-                                        React.createElement('span', { className: 'ml-2' }, TITLES[key][0])
+                                        React.createElement('span', { className: 'text-sm' }, TITLES[key][0])
                                     )
                                 )
                             )
                         ],
                         React.createElement(
-                            'button',
-                            {
-                                className: 'mt-4 py-2 px-4 text-xs inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20',
-                                onClick: () => setShowFieldSelector(false)
-                            },
-                            '确认'
+                            'div',
+                            { className: 'mt-6 flex justify-end' },
+                            React.createElement(
+                                'button',
+                                {
+                                    className: 'confirm-button',
+                                    onClick: () => setShowFieldSelector(false)
+                                },
+                                '确认'
+                            )
                         )
                     )
                 )
