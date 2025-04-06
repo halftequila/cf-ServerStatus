@@ -4,7 +4,7 @@
 KUNLUN_BIN="$HOME/bin/kunlun"
 KUNLUN_SERVICE="kunlun.service"
 KUNLUN_SERVICE_PATH="/etc/systemd/system/$KUNLUN_SERVICE"
-KUNLUN_URL="https://github.com/halftequila/kunlun/releases/download/latest/kunlun_amd64"
+KUNLUN_URL="https://github.com/halftequila/cf-ServerStatus/releases/download/0.0.1/kunlun_amd64"
 
 # 函数：检查 root 权限
 is_root() {
