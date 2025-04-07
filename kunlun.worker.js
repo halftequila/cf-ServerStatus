@@ -59,7 +59,10 @@ async function initDB(env) {
             CREATE TABLE IF NOT EXISTS client (
                 id INTEGER PRIMARY KEY NOT NULL,
                 machine_id TEXT UNIQUE NOT NULL,
-                hostname TEXT NOT NULL
+                hostname TEXT NOT NULL,
+                organization,
+                country TEXT,
+                region TEXT
             )
         `).run();
 
@@ -163,7 +166,7 @@ async function handleInitDB(request, env, url) {
 
 // 处理 GET / 请求
 async function handleGetIndex(request, env, url) {
-    const htmlUrl = 'https://raw.githubusercontent.com/hochenggang/kunlun-server-worker/refs/heads/main/kunlun.html';
+    const htmlUrl = 'https://raw.githubusercontent.com/halftequila/kunlun-server-worker/refs/heads/main/status.html';
     const response = await fetch(htmlUrl);
 
     if (response.ok) {
@@ -194,7 +197,8 @@ const FIELDS_LIST = [
     "default_interface_net_tx_bytes", "cpu_num_cores", "cpu_delay_us",
     "disk_delay_us", "root_disk_total_kb", "root_disk_avail_kb",
     "reads_completed", "writes_completed", "reading_ms", "writing_ms",
-    "iotime_ms", "ios_in_progress", "weighted_io_time", "machine_id", "hostname"
+    "iotime_ms", "ios_in_progress", "weighted_io_time", "machine_id", "hostname",
+    "organization", "country", "region"
 ];
 
 // 定义非累计型字段
@@ -203,7 +207,8 @@ const NON_CUMULATIVE_FIELDS = [
     'running_tasks', 'total_tasks', 'mem_total_mib', 'mem_free_mib',
     'mem_used_mib', 'mem_buff_cache_mib', 'tcp_connections', 'udp_connections',
     'cpu_num_cores', 'cpu_delay_us', 'disk_delay_us', 'root_disk_total_kb',
-    'root_disk_avail_kb', 'ios_in_progress', 'machine_id', 'hostname'
+    'root_disk_avail_kb', 'ios_in_progress', 'machine_id', 'hostname',
+    'organization', 'country', 'region'
 ];
 
 // 计算差值
@@ -224,6 +229,7 @@ function calculateDelta(newData, previousData) {
 
 // 处理 POST /status 请求
 async function handlePostStatus(request, env, url) {
+    const cf = request.cf;
     const formData = await request.formData();
     const values = formData.get('values');
     let valuesList = values.split(',');
@@ -241,6 +247,9 @@ async function handlePostStatus(request, env, url) {
     // 获取或创建客户端记录
     const machineId = valuesList[35];
     const hostname = valuesList[36];
+    const asOrganization = cf?.asOrganization || null;
+    const country = cf?.country || null;
+    const region = cf?.region || null;
 
     // 取其前35位數據字段
     valuesList = valuesList.slice(0, 35)
@@ -262,10 +271,10 @@ async function handlePostStatus(request, env, url) {
         if (results && results.length > 0) {
             clientId = results[0].id;
             // 检查 hostname 是否需要更新
-            if (results[0].hostname !== hostname) {
+            if (results[0].hostname !== hostname || results[0].organization !== asOrganization  || results[0].country !== country  || results[0].region !== region) {
                 const { meta: metaUpdateClient } = await env.DB
-                    .prepare('UPDATE client SET hostname = ? WHERE id = ?')
-                    .bind(hostname, clientId)
+                    .prepare('UPDATE client SET hostname = ?, organization = ?, country = ?, region = ? WHERE id = ?')
+                    .bind(hostname, asOrganization, country, region, clientId)
                     .run();
 
                 rows_read += metaUpdateClient.rows_read
@@ -276,14 +285,14 @@ async function handlePostStatus(request, env, url) {
             const { meta: metaCountResults, results: countResults } = await env.DB
                 .prepare('SELECT MAX(id) AS max_id FROM client')
                 .run();
-
+                
             rows_read += metaCountResults.rows_read
             rows_written += metaCountResults.rows_written
 
             clientId = countResults[0].max_id ? countResults[0].max_id + 1 : 1;
             const { meta: metaInsertClient } = await env.DB
-                .prepare('INSERT INTO client (id, machine_id, hostname) VALUES (?, ?, ?)')
-                .bind(clientId, machineId, hostname)
+                .prepare('INSERT INTO client (id, machine_id, hostname, organization, country, region) VALUES (?, ?, ?, ?, ?, ?)')
+                .bind(clientId, machineId, hostname, asOrganization, country, region)
                 .run();
 
             rows_read += metaInsertClient.rows_read
@@ -514,7 +523,7 @@ async function handleGetLatestStatus(request, env, url) {
     try {
         const { meta, results } = await env.DB
             .prepare(`
-                SELECT sl.*, c.machine_id, c.hostname
+                SELECT sl.*, c.machine_id, c.hostname, c.organization, c.country, c.region
                 FROM status_latest sl
                 JOIN client c ON sl.client_id = c.id
                 WHERE sl.timestamp = (
