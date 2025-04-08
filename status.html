@@ -7,179 +7,201 @@
     <title>Server Status - Dashboard</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SF Pro Display Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
 
     <style>
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #ffffff;
-            color: #000000;
+        :root {
+            --bauhaus-red: #E53935;
+            --bauhaus-blue: #1E88E5;
+            --bauhaus-yellow: #FDD835;
+            --bauhaus-black: #212121;
+            --bauhaus-white: #FFFFFF;
+            --bauhaus-gray: #E0E0E0;
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bauhaus-white);
+            color: var(--bauhaus-black);
+        }
+
+        /* Grid System */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-            gap: 1.5rem;
-            padding: 0.5rem;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding: 24px;
         }
 
+        /* Typography */
         .kv-k {
             font-size: 0.75rem;
-            font-weight: 600;
-            color: #1d1d1f;
+            font-weight: 700;
+            color: var(--bauhaus-black);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
         }
 
         .kv-v {
             font-size: 1rem;
             font-weight: 500;
-            color: #000000;
+            color: var(--bauhaus-black);
             letter-spacing: -0.02em;
             margin-top: 0.5rem;
         }
 
-        .operate-button {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #DE0000;
-            font-size: 0.875rem;
+        /* Bauhaus Components */
+        .bauhaus-card {
+            border: 2px solid var(--bauhaus-black);
+            box-shadow: 8px 8px 0 var(--bauhaus-black);
+            transition: all 0.2s;
+            background: var(--bauhaus-white);
+            padding: 24px;
+        }
+
+        .bauhaus-card:hover {
+            transform: translate(2px, 2px);
+            box-shadow: 6px 6px 0 var(--bauhaus-black);
+        }
+
+        .bauhaus-btn {
+            border: 2px solid var(--bauhaus-black);
+            background: var(--bauhaus-yellow);
+            color: var(--bauhaus-black);
+            padding: 12px 24px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
+            transition: all 0.2s;
+            box-shadow: 4px 4px 0 var(--bauhaus-black);
         }
 
-        .operate-button:hover {
-            color: #FF0000;
+        .bauhaus-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0 var(--bauhaus-black);
         }
 
+        .bauhaus-input {
+            border: 2px solid var(--bauhaus-black);
+            padding: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .bauhaus-input:focus {
+            border-color: var(--bauhaus-blue);
+        }
+
+        /* Status Indicators */
         .offline {
-            border-left: 8px solid #DE0000;
+            border-left: 8px solid var(--bauhaus-red);
         }
 
         .online {
-            border-left: 8px solid #0000DE;
+            border-left: 8px solid var(--bauhaus-blue);
         }
 
-        .bg-success {
-            background-color: #0000DE;
+        /* Geometric Elements */
+        .bauhaus-circle {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--bauhaus-black);
+            border-radius: 50%;
         }
 
-        .server-card {
-            background: #ffffff;
-            border-radius: 0;
-            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            border: 2px solid #000000;
-            padding: 1rem;
+        .bauhaus-square {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--bauhaus-black);
         }
 
-        .server-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
+        .bauhaus-triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 40px solid var(--bauhaus-black);
         }
 
-        #trendChart {
-            min-height: 300px;
-            border-radius: 0;
-            padding: 1rem;
-            background: white;
-            border: 2px solid #000000;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            border-radius: 0;
-            border: 2px solid #000000;
-            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        select {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 0.5rem center;
-            background-size: 1em;
-            padding-right: 2.5rem;
-            border: 2px solid #000000;
-            border-radius: 0;
-        }
-
-        .settings-button {
-            width: 2.5rem;
-            height: 2.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0;
-            background: #FFDE00;
-            border: 2px solid #000000;
-            transition: all 0.2s ease;
-        }
-
-        .settings-button:hover {
-            background: #FFE866;
-        }
-
-        /* Larger circle progress */
-        svg.percentage-circle {
-            width: 2rem;
-            height: 2rem;
-            margin-right: 0.75rem;
-        }
-
-        svg.percentage-circle circle {
-            transition: stroke-dashoffset 0.35s;
-            transform: rotate(-90deg);
-            transform-origin: 50% 50%;
-            stroke-width: 10;
-        }
-
-        .circle-background {
-            stroke: #E5E5E5;
-        }
-
-        .circle-progress {
-            stroke: #0000DE;
-        }
-
-        /* Custom button styles */
-        .bauhaus-button {
-            background: #FFDE00;
-            border: 2px solid #000000;
-            color: #000000;
-            padding: 0.5rem 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .bauhaus-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        /* Header styles */
+        /* Header */
         .bauhaus-header {
-            font-size: 2rem;
-            font-weight: 800;
+            font-size: 2.5rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #000000;
+            letter-spacing: 0.2em;
+            color: var(--bauhaus-black);
             text-align: center;
-            margin: 2rem 0;
+            margin: 48px 0;
             position: relative;
         }
 
         .bauhaus-header::after {
             content: '';
             display: block;
-            width: 60px;
-            height: 6px;
-            background: #DE0000;
-            margin: 1rem auto;
+            width: 80px;
+            height: 8px;
+            background: var(--bauhaus-red);
+            margin: 24px auto;
+        }
+
+        /* Progress Circle */
+        svg.percentage-circle {
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        svg.percentage-circle circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            stroke-width: 8;
+        }
+
+        .circle-background {
+            stroke: var(--bauhaus-gray);
+        }
+
+        .circle-progress {
+            stroke: var(--bauhaus-blue);
+        }
+
+        /* Modal */
+        .modal-content {
+            background: var(--bauhaus-white);
+            border: 2px solid var(--bauhaus-black);
+            box-shadow: 8px 8px 0 var(--bauhaus-black);
+            padding: 24px;
+        }
+
+        /* Select */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+            padding-right: 40px;
+            border: 2px solid var(--bauhaus-black);
+        }
+
+        /* Settings Button */
+        .settings-button {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bauhaus-yellow);
+            border: 2px solid var(--bauhaus-black);
+            transition: all 0.2s;
+        }
+
+        .settings-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0 var(--bauhaus-black);
         }
     </style>
 </head>
@@ -455,12 +477,10 @@
                     const labels = apiData.map((item) => formatTimestamp(item.timestamp * 1000));
 
                     const CHART_COLORS = {
-                        red: 'rgba(255, 99, 132, 0.8)',
-                        orange: 'rgba(255, 159, 64, 0.8)',
-                        yellow: 'rgba(255, 205, 86, 0.8)',
-                        green: 'rgba(75, 192, 192, 0.8)',
-                        blue: 'rgba(54, 162, 235, 0.8)',
-                        purple: 'rgba(153, 102, 255, 0.8)',
+                        red: 'rgba(229, 57, 53, 0.8)',    // Bauhaus Red
+                        blue: 'rgba(30, 136, 229, 0.8)',  // Bauhaus Blue
+                        yellow: 'rgba(253, 216, 53, 0.8)', // Bauhaus Yellow
+                        black: 'rgba(33, 33, 33, 0.8)',    // Bauhaus Black
                     };
 
                     const datasets = selectedKeys.map((key, index) => ({
@@ -484,49 +504,81 @@
                     console.log(chartData, apiObjectKeys[chartData['datasets'][0].label][0])
                     const ctx = document.getElementById('trendChart').getContext('2d');
 
+                    const chartOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                ticks: {
+                                    maxTicksLimit: 5,
+                                    autoSkip: true,
+                                    font: { 
+                                        family: 'Inter',
+                                        size: 12,
+                                        weight: '500'
+                                    },
+                                },
+                                grid: { display: false },
+                            },
+                            y: {
+                                ticks: {
+                                    maxTicksLimit: 5,
+                                    font: { 
+                                        family: 'Inter',
+                                        size: 12,
+                                        weight: '500'
+                                    },
+                                    callback: (value) => {
+                                        const unit = apiObjectKeys[chartData['datasets'][0].label][1];
+                                        let tempValue = 0;
+                                        if (value > 10) {
+                                            if (value > 1000) {
+                                                tempValue = Number(value.toFixed(0)).toLocaleString();
+                                            } else {
+                                                tempValue = value.toFixed(0);
+                                            }
+                                        } else {
+                                            tempValue = value.toFixed(2);
+                                        }
+                                        return `${tempValue}${unit}`;
+                                    },
+                                },
+                                grid: { 
+                                    display: true,
+                                    drawBorder: false,
+                                    color: 'rgba(33, 33, 33, 0.1)'
+                                },
+                            },
+                        },
+                        plugins: {
+                            legend: { 
+                                display: false 
+                            },
+                            tooltip: { 
+                                enabled: true,
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: 'rgba(33, 33, 33, 0.9)',
+                                titleFont: {
+                                    family: 'Inter',
+                                    size: 14,
+                                    weight: '700'
+                                },
+                                bodyFont: {
+                                    family: 'Inter',
+                                    size: 12,
+                                    weight: '500'
+                                },
+                                padding: 12,
+                                cornerRadius: 0
+                            },
+                        },
+                    };
+
                     const chart = new Chart(ctx, {
                         type: 'line',
                         data: chartData,
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                x: {
-                                    ticks: {
-                                        maxTicksLimit: 5,
-                                        autoSkip: true,
-                                        font: { size: 10 },
-                                    },
-                                    grid: { display: false },
-                                },
-                                y: {
-                                    ticks: {
-                                        maxTicksLimit: 5,
-                                        font: { size: 10 },
-                                        callback: (value) => {
-                                            const unit = apiObjectKeys[chartData['datasets'][0].label][1]
-                                            let tempValue = 0
-                                            if (value > 10) {
-                                                if (value > 1000) {
-                                                    tempValue = Number(value.toFixed(0)).toLocaleString()
-                                                }
-                                                else {
-                                                    tempValue = value.toFixed(0)
-                                                }
-                                            } else {
-                                                tempValue = value.toFixed(2)
-                                            }
-                                            return `${tempValue}${unit}`
-                                        },
-                                    },
-                                    grid: { display: true, drawBorder: false },
-                                },
-                            },
-                            plugins: {
-                                legend: { display: false },
-                                tooltip: { enabled: true, mode: 'index', intersect: false },
-                            },
-                        },
+                        options: chartOptions
                     });
 
                     return () => chart.destroy(); // 清理图表实例
@@ -538,21 +590,21 @@
                 { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4' },
                 React.createElement(
                     'div',
-                    { className: 'bg-white rounded-lg p-2 py-4 w-full max-w-4xl' },
+                    { className: 'modal-content w-full max-w-4xl' },
                     React.createElement(
                         'div',
-                        { className: 'flex justify-between items-center mb-4 ' },
-                        React.createElement('h2', { className: 'text-sm font-bold' }, '统计数据'),
+                        { className: 'flex justify-between items-center mb-6' },
+                        React.createElement('h2', { className: 'text-xl font-bold' }, 'Statistics'),
                         React.createElement(
                             'button',
-                            { onClick: onClose, className: 'text-sm text-gray-500 hover:text-gray-700' },
+                            { onClick: onClose, className: 'bauhaus-btn' },
                             'Close'
                         )
                     ),
                     React.createElement(
                         'div',
-                        { className: 'grid grid-cols-2 gap-4 mb-4' },
-                        // 数据级别单选框
+                        { className: 'grid grid-cols-2 gap-6 mb-6' },
+                        // Data level selector
                         React.createElement(
                             'div',
                             null,
@@ -561,14 +613,14 @@
                                 {
                                     value: dataLevel,
                                     onChange: handleDataLevelChange,
-                                    className: 'text-sm w-full p-2 border rounded',
+                                    className: 'bauhaus-input w-full',
                                 },
                                 dataLevelOptions.map((option) =>
                                     React.createElement('option', { key: option.value, value: option.value, title: option.title }, option.label)
                                 )
                             )
                         ),
-                        // 多选框（数据加载后显示）
+                        // Key selector
                         availableKeys.length > 0 &&
                         React.createElement(
                             'div',
@@ -579,7 +631,7 @@
                                     multiple: false,
                                     value: selectedKeys,
                                     onChange: handleSelectedKeysChange,
-                                    className: 'text-sm w-full p-2 border rounded',
+                                    className: 'bauhaus-input w-full',
                                 },
                                 availableKeys.map((key) =>
                                     React.createElement('option', { key: key, value: key, title: apiObjectKeys[key][2] }, apiObjectKeys[key][0])
@@ -589,7 +641,7 @@
                     ),
                     React.createElement(
                         'div',
-                        { className: 'relative', style: { minHeight: '350px' } },
+                        { className: 'bauhaus-card', style: { minHeight: '350px' } },
                         React.createElement('canvas', { id: 'trendChart' })
                     )
                 )
@@ -607,27 +659,28 @@
 
             const [showTrendModal, setShowTrendModal] = useState(false);
 
-            // KeyValue 组件：用于渲染 k:value 对
+            // KeyValue component
             const KeyValue = ({ k, v }) => {
                 return React.createElement(
-                    'div', {},
-                    React.createElement('span', { className: 'kv-k text-gray-400 text-xs', title: TITLES[k][2] }, TITLES[k][0]),
-                    React.createElement('div', { className: 'kv-v text-gray-700' }, [v, TITLES[k][1]])
+                    'div',
+                    { className: 'bauhaus-card col-span-3' },
+                    React.createElement('span', { className: 'kv-k', title: TITLES[k][2] }, TITLES[k][0]),
+                    React.createElement('div', { className: 'kv-v' }, [v, TITLES[k][1]])
                 );
             };
 
             return React.createElement(
                 'div',
-                { className: `bg-white rounded-lg shadow-sm ${server.isOffline ? 'offline' : 'online'}` },
+                { className: `bauhaus-card ${server.isOffline ? 'offline' : 'online'}` },
                 React.createElement(
                     'div',
                     {
-                        className: ' p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors',
+                        className: 'cursor-pointer hover:bg-gray-50 transition-colors',
                         onClick: onToggleExpand
                     },
                     React.createElement(
                         'div',
-                        { className: `grid-container text-sm ` },
+                        { className: 'grid-container' },
                         selectedFields.map((key) =>
                             React.createElement(KeyValue, { k: key, v: server[key] })
                         )
@@ -636,10 +689,10 @@
                 isExpanded &&
                 React.createElement(
                     'div',
-                    { className: 'p-3 border-t border-gray-200' },
+                    { className: 'border-t border-gray-200 mt-4 pt-4' },
                     React.createElement(
                         'div',
-                        { className: 'grid-container text-sm' },
+                        { className: 'grid-container' },
                         Object.keys(TITLES)
                             .filter((key) => TITLES.hasOwnProperty(key) && !selectedFields.includes(key))
                             .map((key) =>
@@ -649,20 +702,19 @@
                                 })
                             ),
                         React.createElement(
-                            'div', {},
-                            React.createElement('span', { className: 'kv-k text-gray-400 text-xs' }, `操作`),
-                            React.createElement('div',
+                            'div',
+                            { className: 'col-span-3 flex justify-end' },
+                            React.createElement(
+                                'button',
                                 {
                                     onClick: () => setShowTrendModal(true),
-                                    className: 'operate-button',
+                                    className: 'bauhaus-btn',
                                 },
-                                '统计'
+                                'Statistics'
                             )
                         )
                     )
                 ),
-
-
                 showTrendModal && ReactDOM.createPortal(React.createElement(TrendModal, {
                     clientId: server.client_id,
                     onClose: () => setShowTrendModal(false),
@@ -879,7 +931,7 @@
 
             return React.createElement(
                 'div',
-                { className: 'min-h-screen bg-white p-4' },
+                { className: 'min-h-screen bg-white p-8' },
                 React.createElement(
                     'h1',
                     { className: 'bauhaus-header' },
@@ -887,26 +939,35 @@
                 ),
                 React.createElement(
                     'div',
-                    { className: 'space-y-2' },
+                    { className: 'space-y-4' },
                     React.createElement(
                         'div',
                         {
-                            className: 'p-3 py-0 cursor-pointer rounded-lg transition-colors flex items-center justify-between text-sm',
-                        }, [
-                        // server.insert_utc_ts 最近更新时间超过 60 秒视为离线
-                        React.createElement('p', {}, `Online    ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`),
-                        React.createElement(
-                            'button',
-                            {
-                                className: 'p-1 text-gray-500 hover:text-gray-700',
-                                onClick: (e) => {
-                                    e.stopPropagation();
-                                    setShowFieldSelector(true);
-                                }
-                            },
-                            '⚙️'
-                        )
-                    ]
+                            className: 'bauhaus-card flex items-center justify-between',
+                        },
+                        [
+                            React.createElement(
+                                'div',
+                                { className: 'flex items-center space-x-4' },
+                                [
+                                    React.createElement('div', { className: 'bauhaus-circle' }),
+                                    React.createElement('p', { className: 'text-lg font-bold' },
+                                        `Online ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`
+                                    )
+                                ]
+                            ),
+                            React.createElement(
+                                'button',
+                                {
+                                    className: 'settings-button',
+                                    onClick: (e) => {
+                                        e.stopPropagation();
+                                        setShowFieldSelector(true);
+                                    }
+                                },
+                                '⚙️'
+                            )
+                        ]
                     ),
                     servers.map(server =>
                         React.createElement(Server, {
@@ -922,38 +983,38 @@
                 showFieldSelector &&
                 React.createElement(
                     'div',
-                    { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center' },
+                    { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4' },
                     React.createElement(
                         'div',
-                        { className: 'bg-white p-4 rounded-lg shadow-lg' },
+                        { className: 'modal-content w-full max-w-2xl' },
                         [
-                            React.createElement('div', { className: 'py-2 ' }, '选择优先显示字段'),
+                            React.createElement('h2', { className: 'text-xl font-bold mb-4' }, 'Select Display Fields'),
                             React.createElement(
                                 'div',
-                                { className: 'grid grid-cols-3 gap-2 p-2' },
-
+                                { className: 'grid grid-cols-3 gap-4' },
                                 Object.keys(TITLES).map((key) =>
                                     React.createElement(
                                         'label',
-                                        { key, className: 'flex items-center text-gray-400 text-xs' },
+                                        { key, className: 'flex items-center space-x-2' },
                                         React.createElement('input', {
                                             type: 'checkbox',
                                             checked: selectedFields.includes(key),
                                             onChange: () => handleFieldSelection(key),
+                                            className: 'bauhaus-input'
                                         }),
-                                        React.createElement('span', { className: 'ml-2' }, TITLES[key][0])
+                                        React.createElement('span', { className: 'text-sm' }, TITLES[key][0])
                                     )
                                 )
+                            ),
+                            React.createElement(
+                                'button',
+                                {
+                                    className: 'bauhaus-btn mt-6',
+                                    onClick: () => setShowFieldSelector(false)
+                                },
+                                'Confirm'
                             )
-                        ],
-                        React.createElement(
-                            'button',
-                            {
-                                className: 'mt-4 py-2 px-4 text-xs inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20',
-                                onClick: () => setShowFieldSelector(false)
-                            },
-                            '确认'
-                        )
+                        ]
                     )
                 )
             );
