@@ -8,165 +8,124 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- SF Pro Display Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap">
 
     <style>
-        :root {
-            --bauhaus-red: #E53935;
-            --bauhaus-blue: #1E88E5;
-            --bauhaus-yellow: #FDD835;
-            --bauhaus-black: #212121;
-        }
-
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #ffffff;
-            color: var(--bauhaus-black);
+            color: #000000;
         }
 
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
-            padding: 24px;
-        }
-
-        .bauhaus-card {
-            border: 2px solid var(--bauhaus-black);
-            box-shadow: 8px 8px 0 var(--bauhaus-black);
-            transition: all 0.2s;
-            background: white;
-            padding: 24px;
-        }
-
-        .bauhaus-card:hover {
-            box-shadow: 6px 6px 0 var(--bauhaus-black);
-            transform: translate(2px, 2px);
-        }
-
-        .bauhaus-btn {
-            border: none;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.2s;
-            background: var(--bauhaus-yellow);
-            color: var(--bauhaus-black);
-            padding: 12px 24px;
-            border: 2px solid var(--bauhaus-black);
-            box-shadow: 4px 4px 0 var(--bauhaus-black);
-        }
-
-        .bauhaus-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 0 var(--bauhaus-black);
-        }
-
-        .bauhaus-input {
-            border: 2px solid var(--bauhaus-black);
-            font-size: 1rem;
-            outline: none;
-            padding: 12px;
-            width: 100%;
-        }
-
-        .bauhaus-input:focus {
-            border-color: var(--bauhaus-blue);
-        }
-
-        .bauhaus-header {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            text-align: center;
-            margin: 48px 0;
-            position: relative;
-        }
-
-        .bauhaus-header::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 6px;
-            background: var(--bauhaus-red);
-            margin: 24px auto;
+            grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+            gap: 1.5rem;
+            padding: 0.5rem;
         }
 
         .kv-k {
-            font-size: 0.875rem;
-            font-weight: 700;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #1d1d1f;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            color: var(--bauhaus-black);
         }
 
         .kv-v {
-            font-size: 1.125rem;
+            font-size: 1rem;
             font-weight: 500;
-            margin-top: 8px;
+            color: #000000;
+            letter-spacing: -0.02em;
+            margin-top: 0.5rem;
         }
 
-        .online {
-            border-left: 8px solid var(--bauhaus-blue);
+        .operate-button {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #DE0000;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .operate-button:hover {
+            color: #FF0000;
         }
 
         .offline {
-            border-left: 8px solid var(--bauhaus-red);
+            border-left: 8px solid #DE0000;
         }
 
-        .bauhaus-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--bauhaus-yellow);
-            border: 2px solid var(--bauhaus-black);
+        .online {
+            border-left: 8px solid #0000DE;
         }
 
-        .bauhaus-square {
-            width: 24px;
-            height: 24px;
-            background: var(--bauhaus-blue);
-            border: 2px solid var(--bauhaus-black);
+        .bg-success {
+            background-color: #0000DE;
         }
 
-        .bauhaus-triangle {
-            width: 0;
-            height: 0;
-            border-left: 12px solid transparent;
-            border-right: 12px solid transparent;
-            border-bottom: 24px solid var(--bauhaus-red);
+        .server-card {
+            background: #ffffff;
+            border-radius: 0;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            border: 2px solid #000000;
+            padding: 1rem;
+        }
+
+        .server-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
         }
 
         #trendChart {
             min-height: 300px;
-            border: 2px solid var(--bauhaus-black);
-            box-shadow: 8px 8px 0 var(--bauhaus-black);
-            padding: 24px;
+            border-radius: 0;
+            padding: 1rem;
             background: white;
+            border: 2px solid #000000;
         }
 
         .modal-content {
-            background: white;
-            border: 2px solid var(--bauhaus-black);
-            box-shadow: 8px 8px 0 var(--bauhaus-black);
-            padding: 24px;
+            background: #ffffff;
+            border-radius: 0;
+            border: 2px solid #000000;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.2);
         }
 
         select {
             appearance: none;
             background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
-            background-position: right 12px center;
+            background-position: right 0.5rem center;
             background-size: 1em;
-            padding-right: 48px;
-            border: 2px solid var(--bauhaus-black);
+            padding-right: 2.5rem;
+            border: 2px solid #000000;
+            border-radius: 0;
         }
 
+        .settings-button {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            background: #FFDE00;
+            border: 2px solid #000000;
+            transition: all 0.2s ease;
+        }
+
+        .settings-button:hover {
+            background: #FFE866;
+        }
+
+        /* Larger circle progress */
         svg.percentage-circle {
-            width: 32px;
-            height: 32px;
-            margin-right: 12px;
+            width: 2rem;
+            height: 2rem;
+            margin-right: 0.75rem;
         }
 
         svg.percentage-circle circle {
@@ -181,13 +140,46 @@
         }
 
         .circle-progress {
-            stroke: var(--bauhaus-blue);
+            stroke: #0000DE;
         }
 
-        @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
+        /* Custom button styles */
+        .bauhaus-button {
+            background: #FFDE00;
+            border: 2px solid #000000;
+            color: #000000;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .bauhaus-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Header styles */
+        .bauhaus-header {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #000000;
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .bauhaus-header::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 6px;
+            background: #DE0000;
+            margin: 1rem auto;
         }
     </style>
 </head>
@@ -256,29 +248,39 @@
 
 
         function PercentageCircle({ percentage }) {
-            const radius = 12;
+            const radius = 30; // Increased radius
             const circumference = 2 * Math.PI * radius;
-            const offset = circumference - (percentage / 100) * circumference;
+            const offset = circumference * (1 - percentage);
 
-            return (
-                <svg className="percentage-circle" viewBox="0 0 32 32">
-                    <circle
-                        className="circle-background"
-                        cx="16"
-                        cy="16"
-                        r={radius}
-                        fill="none"
-                    />
-                    <circle
-                        className="circle-progress"
-                        cx="16"
-                        cy="16"
-                        r={radius}
-                        fill="none"
-                        strokeDasharray={circumference}
-                        strokeDashoffset={offset}
-                    />
-                </svg>
+            return React.createElement(
+                'div',
+                { className: 'inline-block align-middle mr-3', title: percentage * 100 + '%' },
+                React.createElement(
+                    'svg',
+                    {
+                        className: 'percentage-circle',
+                        viewBox: '0 0 80 80', // Increased viewBox
+                    },
+                    React.createElement('circle', {
+                        className: 'circle-background',
+                        strokeWidth: '8', // Increased stroke width
+                        fill: 'transparent',
+                        r: radius,
+                        cx: '40',
+                        cy: '40',
+                    }),
+                    React.createElement('circle', {
+                        className: 'circle-progress',
+                        strokeWidth: '8', // Increased stroke width
+                        fill: 'transparent',
+                        r: radius,
+                        cx: '40',
+                        cy: '40',
+                        strokeDasharray: circumference,
+                        strokeDashoffset: offset,
+                        style: { transition: 'stroke-dashoffset 0.5s ease' },
+                    })
+                )
             );
         }
 
@@ -599,36 +601,74 @@
 
 
         // Server component
-        const ServerCard = ({ data }) => {
-            const isOnline = !isOutdated(data.updateAt);
-            const cardClasses = `bauhaus-card ${isOnline ? 'online' : 'offline'}`;
+        const Server = React.memo(({ server, isExpanded, onToggleExpand, selectedFields, onFieldSelection }) => {
+            const modalRoot = document.getElementById('modal-root');
+            if (!modalRoot) return null;
 
-            return (
-                <div className={cardClasses}>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="col-span-2 flex items-center justify-between">
-                            <h3 className="text-xl font-bold uppercase tracking-wider">{data.hostname}</h3>
-                            <div className="flex items-center space-x-2">
-                                <div className={`bauhaus-circle ${isOnline ? 'bg-bauhaus-blue' : 'bg-bauhaus-red'}`} />
-                                <span className="text-sm font-medium">{isOnline ? 'Online' : 'Offline'}</span>
-                            </div>
-                        </div>
-                        {Object.entries(TITLES).map(([key, [title, unit, description]]) => {
-                            if (!data[key]) return null;
-                            return (
-                                <div key={key} className="col-span-1">
-                                    <div className="kv-k">{title}</div>
-                                    <div className="kv-v">
-                                        {typeof data[key] === 'number' ? data[key].toFixed(2) : data[key]}
-                                        {unit}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
+            const [showTrendModal, setShowTrendModal] = useState(false);
+
+            // KeyValue 组件：用于渲染 k:value 对
+            const KeyValue = ({ k, v }) => {
+                return React.createElement(
+                    'div', {},
+                    React.createElement('span', { className: 'kv-k text-gray-400 text-xs', title: TITLES[k][2] }, TITLES[k][0]),
+                    React.createElement('div', { className: 'kv-v text-gray-700' }, [v, TITLES[k][1]])
+                );
+            };
+
+            return React.createElement(
+                'div',
+                { className: `bg-white rounded-lg shadow-sm ${server.isOffline ? 'offline' : 'online'}` },
+                React.createElement(
+                    'div',
+                    {
+                        className: ' p-3 cursor-pointer hover:bg-gray-50 rounded-lg transition-colors',
+                        onClick: onToggleExpand
+                    },
+                    React.createElement(
+                        'div',
+                        { className: `grid-container text-sm ` },
+                        selectedFields.map((key) =>
+                            React.createElement(KeyValue, { k: key, v: server[key] })
+                        )
+                    )
+                ),
+                isExpanded &&
+                React.createElement(
+                    'div',
+                    { className: 'p-3 border-t border-gray-200' },
+                    React.createElement(
+                        'div',
+                        { className: 'grid-container text-sm' },
+                        Object.keys(TITLES)
+                            .filter((key) => TITLES.hasOwnProperty(key) && !selectedFields.includes(key))
+                            .map((key) =>
+                                React.createElement(KeyValue, {
+                                    k: key,
+                                    v: server[key],
+                                })
+                            ),
+                        React.createElement(
+                            'div', {},
+                            React.createElement('span', { className: 'kv-k text-gray-400 text-xs' }, `操作`),
+                            React.createElement('div',
+                                {
+                                    onClick: () => setShowTrendModal(true),
+                                    className: 'operate-button',
+                                },
+                                '统计'
+                            )
+                        )
+                    )
+                ),
+
+
+                showTrendModal && ReactDOM.createPortal(React.createElement(TrendModal, {
+                    clientId: server.client_id,
+                    onClose: () => setShowTrendModal(false),
+                }), modalRoot)
             );
-        };
+        });
 
         // Reducer for managing expanded states
         const expandedStatesReducer = (state, action) => {
@@ -643,97 +683,283 @@
         function App() {
             const [servers, setServers] = useState([]);
             const [expandedStates, dispatch] = useReducer(expandedStatesReducer, {});
-            const [selectedServer, setSelectedServer] = useState(null);
-            const [showModal, setShowModal] = useState(false);
-            const [timeRange, setTimeRange] = useState('1h');
-            const chartRef = useRef(null);
+            const [showFieldSelector, setShowFieldSelector] = useState(false);
 
-            useEffect(() => {
-                fetchServers();
-                const interval = setInterval(fetchServers, 10000);
-                return () => clearInterval(interval);
+            // 从 localStorage 中读取 selectedFields，如果不存在则使用默认值
+            const [selectedFields, setSelectedFields] = useState(() => {
+                const savedFields = localStorage.getItem('selectedFields');
+                return savedFields ? JSON.parse(savedFields) : ['hostname', 'loadAverages', 'memoryUsage'];
+            });
+
+            const prevServersRef = useRef({}); // 存储上一次的服务器数据
+            const renderServers = useRef({}); // 存储渲染用的服务器数据
+
+
+
+            // 处理字段选择
+            const handleFieldSelection = (key) => {
+                let newSelectedFields;
+                if (selectedFields.includes(key)) {
+                    newSelectedFields = selectedFields.filter(field => field !== key);
+                } else {
+                    newSelectedFields = [...selectedFields, key];
+                }
+                setSelectedFields(newSelectedFields);
+
+                // 将新的 selectedFields 存储到 localStorage
+                localStorage.setItem('selectedFields', JSON.stringify(newSelectedFields));
+            };
+
+
+            // 计算 CPU 百分比
+            const calculateCpuPercentages = (currentCpu, prevCpu) => {
+                const diff = {
+                    cpu_us: currentCpu.cpu_user - (prevCpu.cpu_user || 0),
+                    cpu_sy: currentCpu.cpu_system - (prevCpu.cpu_system || 0),
+                    cpu_ni: currentCpu.cpu_nice - (prevCpu.cpu_nice || 0),
+                    cpu_id: currentCpu.cpu_idle - (prevCpu.cpu_idle || 0),
+                    cpu_wa: currentCpu.cpu_iowait - (prevCpu.cpu_iowait || 0),
+                    cpu_hi: currentCpu.cpu_irq - (prevCpu.cpu_irq || 0),
+                    cpu_st: currentCpu.cpu_steal - (prevCpu.cpu_steal || 0),
+                };
+
+                const total = Object.values(diff).reduce((sum, value) => sum + value, 0);
+
+                // 如果 total 为 0，则返回上一次的值
+                if (total === 0) {
+                    return {
+                        cpu_us_percent: prevCpu.cpu_us_percent || '0.00',
+                        cpu_sy_percent: prevCpu.cpu_sy_percent || '0.00',
+                        cpu_ni_percent: prevCpu.cpu_ni_percent || '0.00',
+                        cpu_id_percent: prevCpu.cpu_id_percent || '0.00',
+                        cpu_wa_percent: prevCpu.cpu_wa_percent || '0.00',
+                        cpu_hi_percent: prevCpu.cpu_hi_percent || '0.00',
+                        cpu_st_percent: prevCpu.cpu_st_percent || '0.00',
+                    };
+                }
+
+                return {
+                    cpu_us_percent: ((diff.cpu_us / total) * 100).toFixed(2),
+                    cpu_sy_percent: ((diff.cpu_sy / total) * 100).toFixed(2),
+                    cpu_ni_percent: ((diff.cpu_ni / total) * 100).toFixed(2),
+                    cpu_id_percent: ((diff.cpu_id / total) * 100).toFixed(2),
+                    cpu_wa_percent: ((diff.cpu_wa / total) * 100).toFixed(2),
+                    cpu_hi_percent: ((diff.cpu_hi / total) * 100).toFixed(2),
+                    cpu_st_percent: ((diff.cpu_st / total) * 100).toFixed(2),
+                };
+            };
+
+            // 计算网络流量速度（KB/s）
+            const calculateNetworkSpeed = (currentNet, prevNet) => {
+                const timeDiff = currentNet.timestamp - prevNet.timestamp;
+
+                const diffRx = currentNet.default_interface_net_rx_bytes - (prevNet.default_interface_net_rx_bytes || currentNet.default_interface_net_rx_bytes);
+                const diffTx = currentNet.default_interface_net_tx_bytes - (prevNet.default_interface_net_tx_bytes || currentNet.default_interface_net_tx_bytes);
+
+                // 如果差值为 0，则返回上一次的值
+                if (diffRx === 0 && diffTx === 0) {
+                    return {
+                        netRxSpeedKB: prevNet.netRxSpeedKB || 0.00,
+                        netTxSpeedKB: prevNet.netTxSpeedKB || 0.00,
+                    };
+                }
+
+                return {
+                    netRxSpeedKB: (diffRx / 1024 / timeDiff).toFixed(2), // 转换为 KB/s
+                    netTxSpeedKB: (diffTx / 1024 / timeDiff).toFixed(2), // 转换为 KB/s
+                };
+            };
+
+            function processIOData(prevData, currentData) {
+                // 计算时间差
+                const timeDiff = currentData.timestamp - prevData.timestamp;
+
+                // 计算I/O速率
+                const readsPerSecond = ((currentData.reads_completed - prevData.reads_completed) / timeDiff).toFixed(2);
+                const writesPerSecond = ((currentData.writes_completed - prevData.writes_completed) / timeDiff).toFixed(2);
+
+                // 计算平均I/O延迟
+                const avgReadLatency = (currentData.reading_ms / currentData.reads_completed).toFixed(2);
+                const avgWriteLatency = (currentData.writing_ms / currentData.writes_completed).toFixed(2);
+
+                // 计算磁盘利用率
+                const diskUtilization = ((currentData.iotime_ms - prevData.iotime_ms) / (timeDiff * 1000000)).toFixed(2);
+
+                // 计算加权I/O时间百分比
+                const weightedIoTimePercent = ((currentData.weighted_io_time / currentData.iotime_ms)).toFixed(2);
+
+                // 返回结果对象
+                return {
+                    readsPerSecond,
+                    writesPerSecond,
+                    avgReadLatency,
+                    avgWriteLatency,
+                    diskUtilization,
+                    weightedIoTimePercent,
+                };
+            }
+
+            // Fetch data without depending on expandedStates
+            const fetchData = useCallback(async () => {
+                try {
+                    const response = await axios.get(`${HOST}/status/latest`);
+                    const newServers = response.data;
+
+                    // 遍历新数据，更新 renderServers
+                    newServers.forEach(server => {
+
+                        // 现在此次计算实际使用的内存
+                        server.mem_really_used_mib = (server.mem_total_mib - (server.mem_free_mib + server.mem_buff_cache_mib)).toFixed(2);
+
+                        // 准备缓存字段
+                        const machineId = server.machine_id;
+                        const prevServer = prevServersRef.current[machineId] || {};
+                        const renderServer = renderServers.current[machineId] || {};
+
+                        // 如果数据没有变化，则跳过
+                        if (JSON.stringify(server) === JSON.stringify(prevServer)) {
+                            return;
+                        } else {
+                            prevServersRef.current[machineId] = server;
+                        }
+
+
+                        // 计算 CPU 百分比和网络速度
+                        const cpuPercentages = calculateCpuPercentages(server, prevServer);
+                        const networkSpeed = calculateNetworkSpeed(server, prevServer);
+                        const uptimeDays = `${Math.floor(server.uptime_s / 3600 / 24)}`
+
+
+                        const PercentageInfo = ({ used, total, unit = 'G' }) => React.createElement('div', { className: 'flex justify-left items-center' },
+                            PercentageCircle({ percentage: (used / total).toFixed(2) }),
+                            React.createElement('span', null, `${(used / 1).toFixed(2)}/${(total / 1).toFixed(2)}${unit}`),
+                        )
+
+
+                        // 更新 renderServers
+                        renderServers.current[machineId] = {
+                            ...server,
+                            ...cpuPercentages,
+                            ...networkSpeed,
+                            ...processIOData(prevServer, server),
+
+                            loadAverages: `${server.load_1min}/${server.load_5min}/${server.load_15min}`,
+                            updateAt: formatTime(server.timestamp),
+                            memoryUsage: PercentageInfo({ used: (server.mem_really_used_mib / 1024).toFixed(2), total: (server.mem_total_mib / 1024).toFixed(2) }),
+                            tasksInfo: `${server.running_tasks}/${server.total_tasks}`,
+                            trafficInfo: `${BtoGB(server.default_interface_net_rx_bytes)}/${BtoGB(server.default_interface_net_tx_bytes)}`,
+                            connectionInfo: `${server.tcp_connections}/${server.udp_connections}`,
+                            rootDiskInfo: PercentageInfo({ used: BtoGB((server.root_disk_total_kb - server.root_disk_avail_kb) * 1024), total: BtoGB(server.root_disk_total_kb * 1024) }),
+                            isOffline: isOutdated(server.timestamp),
+                            uptimeDays: uptimeDays,
+                        };
+
+                    });
+
+                    // console.log('renderServers',renderServers.current)
+                    // 将 renderServers 转换为数组并更新状态
+                    setServers(Object.values(renderServers.current));
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
             }, []);
 
-            const fetchServers = async () => {
-                try {
-                    const response = await axios.get('/status/latest');
-                    setServers(response.data);
-                } catch (error) {
-                    console.error('Error fetching servers:', error);
-                }
-            };
+            // Fetch data on mount and set interval
+            useEffect(() => {
+                fetchData();
+                const interval = setInterval(fetchData, 1000);
+                return () => clearInterval(interval);
+            }, [fetchData]);
 
-            const handleServerClick = (server) => {
-                setSelectedServer(server);
-                setShowModal(true);
-            };
+            // Toggle expanded state without triggering network requests
+            const toggleExpand = useCallback((machineId) => {
+                dispatch({ type: 'TOGGLE', machineId });
+            }, []);
 
-            const handleCloseModal = () => {
-                setShowModal(false);
-                setSelectedServer(null);
-            };
 
-            return (
-                <div className="min-h-screen bg-white">
-                    <header className="bauhaus-header">
-                        Server Status Dashboard
-                        <div className="flex justify-center space-x-4 mt-4">
-                            <div className="bauhaus-circle" />
-                            <div className="bauhaus-square" />
-                            <div className="bauhaus-triangle" />
-                        </div>
-                    </header>
+            return React.createElement(
+                'div',
+                { className: 'min-h-screen bg-white p-4' },
+                React.createElement(
+                    'h1',
+                    { className: 'bauhaus-header' },
+                    'Server Status'
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'space-y-2' },
+                    React.createElement(
+                        'div',
+                        {
+                            className: 'p-3 py-0 cursor-pointer rounded-lg transition-colors flex items-center justify-between text-sm',
+                        }, [
+                        // server.insert_utc_ts 最近更新时间超过 60 秒视为离线
+                        React.createElement('p', {}, `Online    ${servers.filter(server => !isOutdated(server.timestamp)).length}/${servers.length}`),
+                        React.createElement(
+                            'button',
+                            {
+                                className: 'p-1 text-gray-500 hover:text-gray-700',
+                                onClick: (e) => {
+                                    e.stopPropagation();
+                                    setShowFieldSelector(true);
+                                }
+                            },
+                            '⚙️'
+                        )
+                    ]
+                    ),
+                    servers.map(server =>
+                        React.createElement(Server, {
+                            key: server.machine_id,
+                            server: server,
+                            isExpanded: expandedStates[server.machine_id] || false,
+                            onToggleExpand: () => toggleExpand(server.machine_id),
+                            selectedFields: selectedFields,
+                            onFieldSelection: handleFieldSelection
+                        })
+                    )
+                ),
+                showFieldSelector &&
+                React.createElement(
+                    'div',
+                    { className: 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center' },
+                    React.createElement(
+                        'div',
+                        { className: 'bg-white p-4 rounded-lg shadow-lg' },
+                        [
+                            React.createElement('div', { className: 'py-2 ' }, '选择优先显示字段'),
+                            React.createElement(
+                                'div',
+                                { className: 'grid grid-cols-3 gap-2 p-2' },
 
-                    <div className="grid-container">
-                        {servers.map((server) => (
-                            <div key={server.machine_id} className="col-span-12 md:col-span-6 lg:col-span-4">
-                                <ServerCard data={server} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {showModal && selectedServer && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                            <div className="modal-content w-full max-w-4xl">
-                                <div className="flex justify-between items-center mb-6">
-                                    <h2 className="text-2xl font-bold uppercase tracking-wider">
-                                        {selectedServer.hostname}
-                                    </h2>
-                                    <button
-                                        className="bauhaus-btn"
-                                        onClick={handleCloseModal}
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="col-span-1 md:col-span-2">
-                                        <canvas ref={chartRef} id="trendChart" />
-                                    </div>
-                                    {Object.entries(TITLES).map(([key, [title, unit, description]]) => {
-                                        if (!selectedServer[key]) return null;
-                                        return (
-                                            <div key={key} className="bauhaus-card">
-                                                <div className="kv-k">{title}</div>
-                                                <div className="kv-v">
-                                                    {typeof selectedServer[key] === 'number'
-                                                        ? selectedServer[key].toFixed(2)
-                                                        : selectedServer[key]}
-                                                    {unit}
-                                                </div>
-                                                <div className="text-sm text-gray-600 mt-2">{description}</div>
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                                Object.keys(TITLES).map((key) =>
+                                    React.createElement(
+                                        'label',
+                                        { key, className: 'flex items-center text-gray-400 text-xs' },
+                                        React.createElement('input', {
+                                            type: 'checkbox',
+                                            checked: selectedFields.includes(key),
+                                            onChange: () => handleFieldSelection(key),
+                                        }),
+                                        React.createElement('span', { className: 'ml-2' }, TITLES[key][0])
+                                    )
+                                )
+                            )
+                        ],
+                        React.createElement(
+                            'button',
+                            {
+                                className: 'mt-4 py-2 px-4 text-xs inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20',
+                                onClick: () => setShowFieldSelector(false)
+                            },
+                            '确认'
+                        )
+                    )
+                )
             );
         }
 
-        ReactDOM.render(<App />, document.getElementById('root'));
+        ReactDOM.render(React.createElement(App), document.getElementById('root'));
     </script>
 </body>
 
