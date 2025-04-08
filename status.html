@@ -29,7 +29,7 @@
         /* Grid System */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             padding: 16px;
         }
@@ -58,6 +58,7 @@
             transition: all 0.2s;
             background: var(--bauhaus-white);
             padding: 16px;
+            min-width: 200px;
         }
 
         .bauhaus-card:hover {
@@ -663,7 +664,7 @@
             const KeyValue = ({ k, v }) => {
                 return React.createElement(
                     'div',
-                    { className: 'bauhaus-card col-span-2' },
+                    { className: 'bauhaus-card' },
                     React.createElement('span', { className: 'kv-k', title: TITLES[k][2] }, TITLES[k][0]),
                     React.createElement('div', { className: 'kv-v' }, [v, TITLES[k][1]])
                 );
