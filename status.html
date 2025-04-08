@@ -161,7 +161,7 @@
         }
 
         .circle-background {
-            stroke: var(--bauhaus-white);
+            stroke: var(--bauhaus-gray);
         }
 
         .circle-progress {
@@ -675,6 +675,7 @@
                 React.createElement(
                     'div',
                     {
+                        className: 'cursor-pointer hover:bg-gray-50 transition-colors',
                         onClick: onToggleExpand
                     },
                     React.createElement(
