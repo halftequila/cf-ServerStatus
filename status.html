@@ -29,9 +29,10 @@
         /* Grid System */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 16px;
             padding: 16px;
+            width: 100%;
         }
 
         /* Typography */
@@ -58,7 +59,7 @@
             transition: all 0.2s;
             background: var(--bauhaus-white);
             padding: 16px;
-            min-width: 200px;
+            width: 100%;
         }
 
         .bauhaus-card:hover {
@@ -932,7 +933,7 @@
 
             return React.createElement(
                 'div',
-                { className: 'min-h-screen bg-white p-8' },
+                { className: 'min-h-screen bg-white p-4' },
                 React.createElement(
                     'h1',
                     { className: 'bauhaus-header' },
@@ -940,11 +941,11 @@
                 ),
                 React.createElement(
                     'div',
-                    { className: 'space-y-4' },
+                    { className: 'space-y-4 w-full' },
                     React.createElement(
                         'div',
                         {
-                            className: 'bauhaus-card flex items-center justify-between',
+                            className: 'bauhaus-card flex items-center justify-between w-full',
                         },
                         [
                             React.createElement(
